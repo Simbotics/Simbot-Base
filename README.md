@@ -10,3 +10,11 @@ Want to contribute to this project? We make it as simple as possible to open a p
 4. Finally, once you have reviewed your contributions just hit the `create pull request` button and you're all set!
 
 _Note: Please await the review of one or more repository managers until your code changes are pushed to main._ **ALL GITHUB ACTIONS MUST PASS IN A PULL REQUEST TO BE ELIGEABLE TO BE MERGED**
+
+## Contributors and Credits
+Thank you to the following who has contributed, supplied the tools to make this project even possible, or has supported this project along the way.
+
+- [CTR Electronics](https://github.com/CrossTheRoadElec) - Provided an example and starter [repository](https://github.com/CrossTheRoadElec/Phoenix6-Examples/tree/main/java/SwerveWithPathPlanner) to build from
+- [Ian Tapply](https://github.com/IanTapply22) - Main student contributor
+- [Kaleb Dodd](https://github.com/kaleb-dodd) - Project coordinator
+- [Cole MacPhail](https://github.com/colemacphail) - Project coordinator
