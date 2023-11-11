@@ -1,7 +1,7 @@
 # Simbot-Base
 A base robot with the most up to date utilities and starting components to get started on robot code as fast as possible
 
-# Contributing
+## Contributing
 Want to contribute to this project? We make it as simple as possible to open a pull request and contribute to the codebase to make it the best it can. To open a pull request and contribute code, it's easy! Just follow these steps:
 
 1. Fork the repository and either contribute to the `main` branch on that repository, or make a new branch on that forked repository.
