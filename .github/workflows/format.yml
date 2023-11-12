@@ -1,7 +1,12 @@
 name: Format
 
 on:
-  pull_request: [ main, 2024-beta ]
+  pull_request:
+    types:
+      - open
+    branches:
+      - main
+      - 2024-beta
 
 jobs:
 
