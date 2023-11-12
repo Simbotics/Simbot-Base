@@ -1,8 +1,7 @@
 name: Format
 
 on:
-  push:
-    branches: [ main ] # only format when code gets pushed to main
+  pull_request: [ main, 2023-beta ]
 
 jobs:
 
