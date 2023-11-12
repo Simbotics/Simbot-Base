@@ -17,8 +17,8 @@ public class RobotContainer {
   final double MaxAngularRate = Math.PI; // Half a rotation per second max angular velocity
 
   /* Setting up bindings for necessary control of the swerve drive platform */
-  CommandLogitechF310 driver = new CommandLogitechF310(0);    // Driver Controller
-  CommandLogitechF310 operator = new CommandLogitechF310(1);  // Operator Controller
+  CommandController driver = new CommandController(0);    // Driver Controller
+  CommandController operator = new CommandController(1);  // Operator Controller
   CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
   SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric().withIsOpenLoop(true).withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1); // I want field-centric
                                                                                             // driving in open loop
