@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-
 import com.ctre.phoenix6.SignalLogger;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -28,10 +27,11 @@ public class Robot extends TimedRobot {
 
     SignalLogger.start();
   }
+
   @Override
   public void robotPeriodic() {
-    CommandScheduler.getInstance().run(); 
-    if(UseLimelight) {    
+    CommandScheduler.getInstance().run();
+    if (UseLimelight) {
       var lastResult = LimelightHelpers.getLatestResults("limelight").targetingResults;
 
       Pose2d llPose = lastResult.getBotPose2d_wpiBlue();
@@ -77,8 +77,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {}
 
   @Override
-  public void teleopExit() {
-  }
+  public void teleopExit() {}
 
   @Override
   public void testInit() {
