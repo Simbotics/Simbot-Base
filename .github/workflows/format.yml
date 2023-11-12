@@ -1,7 +1,7 @@
 name: Format
 
 on:
-  pull_request: [ main, 2023-beta ]
+  pull_request: [ main, 2024-beta ]
 
 jobs:
 
