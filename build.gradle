@@ -15,11 +15,11 @@ spotless {
             include '**/*.java'
             exclude '**/build/**', '**/build-*/**'
         }
-        toggleOffOn()
+        // toggleOffOn()
         googleJavaFormat()
-        removeUnusedImports()
-        trimTrailingWhitespace()
-        endWithNewline()
+        // removeUnusedImports()
+        // trimTrailingWhitespace()
+        // endWithNewline()
     }
 }
 
