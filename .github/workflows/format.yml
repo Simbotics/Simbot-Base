@@ -2,8 +2,6 @@ name: Format
 
 on:
   pull_request:
-    types:
-      - open
     branches:
       - main
       - 2024-beta
