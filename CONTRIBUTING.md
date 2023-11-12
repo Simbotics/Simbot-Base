@@ -6,4 +6,4 @@ Want to contribute to this project? We make it as simple as possible to open a p
 3. When you are on the pull request screen, set the compare branch to the one on your forked repository and set the base branch to be the `main` branch. We also kindly ask that you add a short description of the changes you have to our codebase in the description section of the pull request. Please be sure that you set an appropriate title for your pull request.
 4. Finally, once you have reviewed your contributions just hit the `create pull request` button and you're all set!
 
-_Note: Please await the review of one or more repository managers until your code changes are pushed to main._ **ALL GITHUB ACTIONS MUST PASS IN A PULL REQUEST TO BE ELIGEABLE TO BE MERGED**
+_Note: Please await the review of one or more repository managers until your code changes are pushed to main._ **ALL GITHUB ACTIONS MUST PASS IN A PULL REQUEST TO BE ELIGIBLE TO BE MERGED**
