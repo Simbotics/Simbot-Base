@@ -19,19 +19,19 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * {@code
  * CommandController driver = new CommandController(0);
  * driver.greenButton().onTrue(() -> {}); // insert command</pre>
- * 
+ *
  * @author Simbotics
- * 
+ *
  * @see CommandXboxController
  */
 public class CommandController {
-    CommandXboxController joystick;
+  CommandXboxController joystick;
 
-    public CommandController(int port) {
-        this.joystick = new CommandXboxController(port);
-    }
-    
-    /**
+  public CommandController(int port) {
+    this.joystick = new CommandXboxController(port);
+  }
+
+  /**
    * Gets the left joystick X axis.
    *
    * @return The left joystick X axis.
@@ -123,16 +123,16 @@ public class CommandController {
 
   /**
    * Gets the back button trigger
-   * 
+   *
    * @return the trigger for the back button
    */
   public Trigger backButton() {
     return this.joystick.back();
   }
 
-/**
+  /**
    * Gets the back button trigger
-   * 
+   *
    * @return the trigger for the back button
    */
   public Trigger startButton() {
@@ -182,7 +182,7 @@ public class CommandController {
 
   /**
    * Get trigger for when POV angle is 180
-   * 
+   *
    * @return trigger for when POV is 180
    */
   public Trigger POVDown() {
@@ -191,27 +191,25 @@ public class CommandController {
 
   /**
    * Get trigger for when POV angle is 90
-   * 
+   *
    * @return trigger for when POV is 90
    */
   public Trigger POVRight() {
     return this.joystick.povRight();
   }
 
-  
   /**
    * Get trigger for when POV angle is 0
-   * 
+   *
    * @return trigger for when POV is 0
    */
   public Trigger POVUp() {
     return this.joystick.povUp();
   }
 
-  
   /**
    * Get trigger for when POV angle is 270
-   * 
+   *
    * @return trigger for when POV is 270
    */
   public Trigger POVLeft() {
