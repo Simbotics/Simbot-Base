@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * 
  * @see CommandXboxController
  */
-public class CommandLogitechF310 {
+public class CommandController {
     CommandXboxController joystick;
 
     public CommandLogitechF310(int port) {
