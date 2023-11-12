@@ -23,5 +23,8 @@ A clear and concise description of what you expected to happen.
 **Media**
 If applicable, add screenshots, pictures or videos to help explain your problem.
 
+**Potential Resolution**
+If you think you know what's causing the problem, mention it here. Otherwise, delete this section.
+
 **Additional context**
 Add any other context about the problem here.
