@@ -5,16 +5,15 @@ package frc.robot.subsystems.led;
  * LED modes
  */
 public class LEDColour {
-  int red, green, blue;
+  double red, green, blue;
 
-  /**
-   * The
-   *
-   * @param red
-   * @param green
-   * @param blue
-   */
   public LEDColour(int red, int green, int blue) {
+    this.red = red;
+    this.green = green;
+    this.blue = blue;
+  }
+
+  public LEDColour(double red, double green, double blue) {
     this.red = red;
     this.green = green;
     this.blue = blue;
@@ -50,19 +49,37 @@ public class LEDColour {
   /**
    * Gets the red value of an LED state object
    *
+   * @return The double value of the red value in the RGB sequence
+   */
+  public double getRed() {
+    return this.red;
+  }
+
+  /**
+   * Gets the red value of an LED state object as an integer
+   * 
    * @return The integer value of the red value in the RGB sequence
    */
-  public int getRed() {
-    return this.red;
+  public int getRedInt() {
+    return (int) this.red;
   }
 
   /**
    * Gets the green value of an LED state object
    *
+   * @return The double value of the green value in the RGB sequence
+   */
+  public double getGreen() {
+    return this.green;
+  }
+
+  /**
+   * Gets the green value of an LED state object as an integer
+   * 
    * @return The integer value of the green value in the RGB sequence
    */
-  public int getGreen() {
-    return this.green;
+  public int getGreenInt() {
+    return (int) this.green;
   }
 
   /**
@@ -70,7 +87,16 @@ public class LEDColour {
    *
    * @return The integer value of the blue value in the RGB sequence
    */
-  public int getBlue() {
+  public double getBlue() {
     return this.blue;
+  }
+
+  /**
+   * Gets the blue value of an LED state object as an integer
+   * 
+   * @return The integer value of the blue value in the RGB sequence
+   */
+  public int getBlueInt() {
+    return (int) this.blue;
   }
 }

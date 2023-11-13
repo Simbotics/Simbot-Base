@@ -11,7 +11,7 @@ You're done! Our goal was to make this as simple and easy to do as a beginner an
 Creating a new segment could not be easier. Simply just do the following:
 1. Open the `LEDSegment` class in this subsystem directory.
 2. Add a new segment with a proper name at the top of the class with the rest of the segments.
-3. Set the index to be one more than the last segment, or set it to 0 if it's the only segment.
+3. Set the segment number to what number of segment it is. This number will start at 1 from the first segment and will go up by one for each segment you create.
 4. Set the default mode to be something like `SolidRed` or to another mode you've created.
 5. Add the following block of code to the initialize function in the `LEDSubsystem` class, be sure to replace segment name with the name of your segment as specified previously :
 ```

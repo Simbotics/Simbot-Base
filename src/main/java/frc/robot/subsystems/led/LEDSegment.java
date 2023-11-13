@@ -2,7 +2,7 @@ package frc.robot.subsystems.led;
 
 import frc.robot.subsystems.led.exceptions.InvalidLEDSegmentException;
 import frc.robot.subsystems.led.modes.LEDMode;
-import frc.robot.subsystems.led.modes.SolidRed;
+import frc.robot.subsystems.led.modes.solid.SolidRed;
 
 /**
  * We are going to attach a name to each index in the LED modes array here. Remember that all
