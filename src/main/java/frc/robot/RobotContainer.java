@@ -41,9 +41,8 @@ public class RobotContainer {
   Pose2d odomStart = new Pose2d(0, 0, new Rotation2d(0, 0));
 
   private void configureBindings() {
-    ledSubsystem.setDefaultCommand(
-        new InstantCommand(() -> ledSubsystem.periodic(), ledSubsystem));
-        
+    ledSubsystem.setDefaultCommand(new InstantCommand(() -> ledSubsystem.periodic(), ledSubsystem));
+
     drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
         drivetrain
             .applyRequest(
