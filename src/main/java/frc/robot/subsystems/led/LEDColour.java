@@ -57,7 +57,7 @@ public class LEDColour {
 
   /**
    * Gets the red value of an LED state object as an integer
-   * 
+   *
    * @return The integer value of the red value in the RGB sequence
    */
   public int getRedInt() {
@@ -75,7 +75,7 @@ public class LEDColour {
 
   /**
    * Gets the green value of an LED state object as an integer
-   * 
+   *
    * @return The integer value of the green value in the RGB sequence
    */
   public int getGreenInt() {
@@ -93,7 +93,7 @@ public class LEDColour {
 
   /**
    * Gets the blue value of an LED state object as an integer
-   * 
+   *
    * @return The integer value of the blue value in the RGB sequence
    */
   public int getBlueInt() {

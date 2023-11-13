@@ -40,10 +40,7 @@ public class LEDSubsystem extends SubsystemBase {
     }
   }
 
-  /**
-   * Initialize the LED subsystem when we create an instance of it
-   * 
-   */
+  /** Initialize the LED subsystem when we create an instance of it */
   public LEDSubsystem() {
     this.initialize();
   }
