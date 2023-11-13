@@ -20,7 +20,7 @@ public class PrideBi extends LEDMode {
         minSegWindow
             + LEDConstants
                 .ledsPerSegment; // Set the end of the segment so we know where to stop displaying
-                                 // LEDs
+    // LEDs
 
     // Divide the segment into three equal parts
     int segmentSize = LEDConstants.ledsPerSegment / 3;

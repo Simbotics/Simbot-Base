@@ -20,7 +20,7 @@ public class StaticPride extends LEDMode {
         minSegWindow
             + LEDConstants
                 .ledsPerSegment; // Set the end of the segment so we know where to stop displaying
-                                 // LEDs
+    // LEDs
 
     for (int i = minSegWindow; i < maxSegWindow; i++) {
       LEDConstants.buffer.setHSV(i, (int) ((i * 5) % 180), 255, 255);

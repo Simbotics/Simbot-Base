@@ -21,7 +21,7 @@ public class SolidWhite extends LEDMode {
         minSegWindow
             + LEDConstants
                 .ledsPerSegment; // Set the end of the segment so we know where to stop displaying
-                                 // LEDs
+    // LEDs
 
     LEDColour whiteLedColour =
         new LEDColour(255, 255, 255); // Create a new RGB sequence with all values 255

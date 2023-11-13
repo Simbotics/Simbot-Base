@@ -20,7 +20,7 @@ public class SolidRed extends LEDMode {
         minSegWindow
             + LEDConstants
                 .ledsPerSegment; // Set the end of the segment so we know where to stop displaying
-                                 // LEDs
+    // LEDs
 
     LEDColour redLedColour =
         new LEDColour(255, 0, 0); // Create a new RGB sequence with only red value being added

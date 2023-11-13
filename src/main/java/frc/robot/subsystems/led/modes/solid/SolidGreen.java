@@ -21,7 +21,7 @@ public class SolidGreen extends LEDMode {
         minSegWindow
             + LEDConstants
                 .ledsPerSegment; // Set the end of the segment so we know where to stop displaying
-                                 // LEDs
+    // LEDs
 
     LEDColour greenLedColour =
         new LEDColour(0, 255, 0); // Create a new RGB sequence with only green value being added

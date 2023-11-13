@@ -21,7 +21,7 @@ public class SolidBlue extends LEDMode {
         minSegWindow
             + LEDConstants
                 .ledsPerSegment; // Set the end of the segment so we know where to stop displaying
-                                 // LEDs
+    // LEDs
 
     LEDColour blueLedColour =
         new LEDColour(0, 0, 255); // Create a new RGB sequence with only blue value being added

@@ -19,7 +19,7 @@ public class Rainbow extends LEDMode {
         minSegWindow
             + LEDConstants
                 .ledsPerSegment; // Set the end of the segment so we know where to stop displaying
-                                 // LEDs
+    // LEDs
 
     double rainbowSpeed =
         15.0; // Set the speed of the rainbow, the higher the number, the faster it is
