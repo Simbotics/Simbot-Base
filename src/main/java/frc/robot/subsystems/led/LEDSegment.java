@@ -78,7 +78,7 @@ public enum LEDSegment {
   /**
    * Gets the index of an LED segment
    *
-   * @return The segment number minus one to accoutn for it being an index
+   * @return The segment number minus one to account for it being an index
    */
   public int getIndex() {
     return (this.segmentNumber - 1);
