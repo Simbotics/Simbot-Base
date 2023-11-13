@@ -10,17 +10,17 @@ import frc.robot.subsystems.led.modes.SolidRed;
 public enum LEDSegment {
 
     // Add all aliases for segments below
-    FrontLeft(0, SolidRed.class),
-    BackLeft(1, SolidRed.class),
-    BackRight(2, SolidRed.class),
-    FrontRight(3, SolidRed.class);
+    FrontLeft(1, SolidRed.class),
+    BackLeft(2, SolidRed.class),
+    BackRight(3, SolidRed.class),
+    FrontRight(4, SolidRed.class);
 
     
-    public final int index;
-    public LEDMode ledMode;
+    public final int segmentNumber; // The segment number of the LED strip (starts at 1 and goes up)
+    public LEDMode ledMode; // The mode of the LED strip
     
-    private LEDSegment(int index, Class<? extends LEDMode> defaultLedMode) {
-        this.index = index;
+    private LEDSegment(int segmentNumber, Class<? extends LEDMode> defaultLedMode) {
+        this.segmentNumber = segmentNumber;
         try {
             this.ledMode = defaultLedMode.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
@@ -63,7 +63,7 @@ public enum LEDSegment {
      * @return The index plus one to account for it being an index
      */
     public int getSegmentNumber() {
-        return (this.index + 1);
+        return this.segmentNumber;
     }
 
     /**
@@ -71,7 +71,7 @@ public enum LEDSegment {
      * @return The integer value of the segments index
      */
     public int getIndex() {
-        return this.index;
+        return (this.segmentNumber - 1);
     }
 
     /**
