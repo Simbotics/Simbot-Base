@@ -5,8 +5,7 @@ import frc.robot.subsystems.led.modes.LEDMode;
 import frc.robot.subsystems.led.modes.solid.SolidRed;
 
 /**
- * We are going to attach a name to each index in the LED modes array here.
- * Remember that all
+ * We are going to attach a name to each index in the LED modes array here. Remember that all
  * indexes start at 0 and NOT 1
  */
 public enum LEDSegment {
@@ -30,8 +29,7 @@ public enum LEDSegment {
   }
 
   /**
-   * Checks if the LED segment is a valid segment based off of the number of
-   * segments in
+   * Checks if the LED segment is a valid segment based off of the number of segments in
    * LEDConstants.java
    *
    * @return True if it is within the index bounds, false if it isn't
@@ -63,7 +61,6 @@ public enum LEDSegment {
     } catch (Exception e) {
       throw new RuntimeException("Error instantiating LEDMode", e);
     }
-
   }
 
   /**
