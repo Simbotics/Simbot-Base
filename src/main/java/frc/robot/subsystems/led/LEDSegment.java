@@ -1,8 +1,9 @@
 package frc.robot.subsystems.led;
 
 import frc.robot.subsystems.led.exceptions.InvalidLEDSegmentException;
+import frc.robot.subsystems.led.modes.Breathing;
 import frc.robot.subsystems.led.modes.LEDMode;
-import frc.robot.subsystems.led.modes.solid.SolidRed;
+import frc.robot.subsystems.led.modes.Solid;
 
 /**
  * We are going to attach a name to each index in the LED modes array here.
@@ -12,10 +13,10 @@ import frc.robot.subsystems.led.modes.solid.SolidRed;
 public enum LEDSegment {
 
   // Add all aliases for segments below
-  FrontLeft(1, SolidRed.class),
-  BackLeft(2, SolidRed.class),
-  BackRight(3, SolidRed.class),
-  FrontRight(4, SolidRed.class);
+  FrontLeft(1, new Solid(new LEDColour(255, 0, 0)).getClass()), // Set the LEDs to solid red
+  BackLeft(2, new Breathing(new LEDColour(0, 255, 0)).getClass()), // Create a green breathing effect
+  BackRight(3, new Breathing(new LEDColour(0, 255, 0)).getClass()), // Create a green breathing effect 
+  FrontRight(4, new Solid(new LEDColour(255, 0, 0)).getClass()); // Set the LEDs to solid red
 
   public final int segmentNumber; // The segment number of the LED strip (starts at 1 and goes up)
   public LEDMode ledMode; // The mode of the LED strip
