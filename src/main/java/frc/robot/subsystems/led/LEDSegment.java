@@ -13,10 +13,8 @@ public enum LEDSegment {
 
   // Add all aliases for segments below
   FrontLeft(1, new Solid(new LEDColour(255, 0, 0))), // Set the LEDs to solid red
-  BackLeft(
-      2, new Breathing(new LEDColour(0, 255, 0))), // Create a green breathing effect
-  BackRight(
-      3, new Breathing(new LEDColour(0, 255, 0))), // Create a green breathing effect
+  BackLeft(2, new Breathing(new LEDColour(0, 255, 0))), // Create a green breathing effect
+  BackRight(3, new Breathing(new LEDColour(0, 255, 0))), // Create a green breathing effect
   FrontRight(4, new Solid(new LEDColour(255, 0, 0))); // Set the LEDs to solid red
 
   public final int segmentNumber; // The segment number of the LED strip (starts at 1 and goes up)
