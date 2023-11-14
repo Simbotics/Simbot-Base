@@ -4,16 +4,15 @@ import frc.robot.subsystems.led.LEDColour;
 import frc.robot.subsystems.led.LEDConstants;
 
 public class Solid extends LEDMode {
-    private LEDColour ledColour;
+  private LEDColour ledColour;
 
-    public Solid(LEDColour ledColour) {
-        this.ledColour = ledColour;
-    }
+  public Solid(LEDColour ledColour) {
+    this.ledColour = ledColour;
+  }
 
   @Override
   public void initialize() {
-    System.out.println(
-        "Starting the Solid LED mode"); // Say we are using the Solid LED mode
+    System.out.println("Starting the Solid LED mode"); // Say we are using the Solid LED mode
   }
 
   @Override
