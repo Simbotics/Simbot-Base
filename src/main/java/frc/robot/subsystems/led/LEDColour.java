@@ -30,7 +30,7 @@ public class LEDColour {
     this.green = ledState.green;
     this.blue = ledState.blue;
 
-    return new LEDColour(this.red, this.green, this.blue);
+    return this;
   }
 
   /**
@@ -43,7 +43,7 @@ public class LEDColour {
     this.green = 0;
     this.blue = 0;
 
-    return new LEDColour(this.red, this.green, this.blue);
+    return this;
   }
 
   /**
