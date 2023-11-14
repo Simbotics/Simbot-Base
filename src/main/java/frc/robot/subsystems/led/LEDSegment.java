@@ -12,23 +12,19 @@ import frc.robot.subsystems.led.modes.Solid;
 public enum LEDSegment {
 
   // Add all aliases for segments below
-  FrontLeft(1, new Solid(new LEDColour(255, 0, 0)).getClass()), // Set the LEDs to solid red
+  FrontLeft(1, new Solid(new LEDColour(255, 0, 0))), // Set the LEDs to solid red
   BackLeft(
-      2, new Breathing(new LEDColour(0, 255, 0)).getClass()), // Create a green breathing effect
+      2, new Breathing(new LEDColour(0, 255, 0))), // Create a green breathing effect
   BackRight(
-      3, new Breathing(new LEDColour(0, 255, 0)).getClass()), // Create a green breathing effect
-  FrontRight(4, new Solid(new LEDColour(255, 0, 0)).getClass()); // Set the LEDs to solid red
+      3, new Breathing(new LEDColour(0, 255, 0))), // Create a green breathing effect
+  FrontRight(4, new Solid(new LEDColour(255, 0, 0))); // Set the LEDs to solid red
 
   public final int segmentNumber; // The segment number of the LED strip (starts at 1 and goes up)
   public LEDMode ledMode; // The mode of the LED strip
 
-  private LEDSegment(int segmentNumber, Class<? extends LEDMode> defaultLedMode) {
+  private LEDSegment(int segmentNumber, LEDMode defaultLedMode) {
     this.segmentNumber = segmentNumber;
-    try {
-      this.ledMode = defaultLedMode.getDeclaredConstructor().newInstance();
-    } catch (Exception e) {
-      throw new RuntimeException("Error instantiating LEDMode", e);
-    }
+    this.ledMode = defaultLedMode;
   }
 
   /**
