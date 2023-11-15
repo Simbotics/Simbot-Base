@@ -36,7 +36,7 @@ public class LEDSubsystem extends SubsystemBase {
   private void setAllSegmentModesCommand(LEDMode ledMode) {
     // For every segment we can set the mode of, set the mode as the one provided
     for (LEDSegment ledSegment : LEDConstants.ledSegments) {
-      ledSegment.setLedMode(ledMode.getClass());
+      ledSegment.setLedMode(ledMode);
     }
   }
 

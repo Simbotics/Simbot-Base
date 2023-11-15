@@ -5,7 +5,7 @@ package frc.robot.subsystems.led;
  * LED modes
  */
 public class LEDColour {
-  double red, green, blue;
+  private double red, green, blue;
 
   public LEDColour(int red, int green, int blue) {
     this.red = red;
@@ -23,25 +23,12 @@ public class LEDColour {
    * Copies the RGB values from an LEDState object to the current one
    *
    * @param ledState The LEDState to copy the RGB values from
-   * @return A new LEDState with the RGB values mirrores from the supplied LEDState
+   * @return The current instane of LEDColour with the new RGB values
    */
   public LEDColour copy(LEDColour ledState) {
     this.red = ledState.red;
     this.green = ledState.green;
     this.blue = ledState.blue;
-
-    return this;
-  }
-
-  /**
-   * Resets the RBG values of the LEDState back to 0, 0, 0. (white)
-   *
-   * @return A new LEDState with the RGB values all being 0
-   */
-  public LEDColour reset() {
-    this.red = 0;
-    this.green = 0;
-    this.blue = 0;
 
     return this;
   }

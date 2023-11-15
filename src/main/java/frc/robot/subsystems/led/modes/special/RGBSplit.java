@@ -8,7 +8,7 @@ public class RGBSplit extends LEDMode {
 
   @Override
   public void initialize() {
-    System.out.println("Starting the RGBSplit LED mode"); // Say we are using the RGBSplit LED mode
+    System.out.println("Starting the RGBSplit LED mode");
   }
 
   @Override

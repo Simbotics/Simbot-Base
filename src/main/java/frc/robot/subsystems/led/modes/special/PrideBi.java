@@ -8,7 +8,7 @@ public class PrideBi extends LEDMode {
 
   @Override
   public void initialize() {
-    System.out.println("Starting the PrideBi LED mode"); // Say we are using the PrideBi LED mode
+    System.out.println("Starting the PrideBi LED mode");
   }
 
   @Override

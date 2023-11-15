@@ -42,7 +42,7 @@ public enum LEDSegment {
    *
    * @param ledMode The mode to set the LEDs to
    */
-  public void setLedMode(Class<? extends LEDMode> ledMode) {
+  public void setLedMode(LEDMode ledMode) {
     // Guard clause to check if the segment is within the bounds of the number of
     // available segments
     if (!this.isValid()) {
@@ -53,11 +53,7 @@ public enum LEDSegment {
               LEDConstants.numberOfSegments)); // Throw an exception with the segment information
     }
 
-    try {
-      this.ledMode = ledMode.getDeclaredConstructor().newInstance();
-    } catch (Exception e) {
-      throw new RuntimeException("Error instantiating LEDMode", e);
-    }
+    this.ledMode = ledMode;
   }
 
   /**

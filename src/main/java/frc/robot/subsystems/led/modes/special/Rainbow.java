@@ -7,7 +7,7 @@ public class Rainbow extends LEDMode {
 
   @Override
   public void initialize() {
-    System.out.println("Starting the Rainbow LED mode"); // Say we are using the Rainbow LED mode
+    System.out.println("Starting the Rainbow LED mode");
   }
 
   @Override

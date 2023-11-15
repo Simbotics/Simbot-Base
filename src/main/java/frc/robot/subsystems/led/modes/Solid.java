@@ -12,7 +12,7 @@ public class Solid extends LEDMode {
 
   @Override
   public void initialize() {
-    System.out.println("Starting the Solid LED mode"); // Say we are using the Solid LED mode
+    System.out.println("Starting the Solid LED mode");
   }
 
   @Override

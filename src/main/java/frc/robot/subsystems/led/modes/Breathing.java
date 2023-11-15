@@ -15,7 +15,7 @@ public class Breathing extends LEDMode {
   @Override
   public void initialize() {
     this.cycle = 1;
-    System.out.println("Starting the Breathing mode"); // Say we are using the Breathing mode
+    System.out.println("Starting the Breathing mode");
   }
 
   @Override

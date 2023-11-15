@@ -8,7 +8,7 @@ public class Off extends LEDMode {
 
   @Override
   public void initialize() {
-    System.out.println("Starting the Off LED mode"); // Say we are using the Off LED mode
+    System.out.println("Starting the Off LED mode");
   }
 
   @Override
