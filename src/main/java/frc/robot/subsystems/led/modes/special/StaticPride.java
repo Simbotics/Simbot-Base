@@ -7,8 +7,7 @@ public class StaticPride extends LEDMode {
 
   @Override
   public void initialize() {
-    System.out.println(
-        "Starting the StaticPride LED mode");
+    System.out.println("Starting the StaticPride LED mode");
   }
 
   @Override
