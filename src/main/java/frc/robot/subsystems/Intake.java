@@ -20,8 +20,7 @@ public class Intake extends SubsystemBase {
     // for this use, we need a PDP, which is not defined right now
     PowerDistribution pdp;
 
-    int intakeCycles = 0;
-    int scoringCycles = 0;
+    int intakeCycles = 0; // could be replace with waitSeconds()?
 
     enum ScoreType {
         HIGH_CONE,
@@ -51,7 +50,7 @@ public class Intake extends SubsystemBase {
      */
     @Override
     public void periodic() {
-        // TODO: fill
+        // TODO: find things to put in here, if there is anything
     }
 
     /**
@@ -62,7 +61,7 @@ public class Intake extends SubsystemBase {
     public Command stopIntakeCommand() {
         return runOnce(() -> {
             this.intakeCycles = 0;
-            this.scoringCycles = 0;
+            // this.scoringCycles = 0;
             this.intakeMotor.set(0);
         }).ignoringDisable(true);
     }
@@ -80,110 +79,74 @@ public class Intake extends SubsystemBase {
             // change how we are scoring by providing a different type
             switch (type) {
                 case MID_CONE -> {
-                    if (scoringCycles < 25) {
-                        scoringCycles++; // could this be replaced with Commands.waitSeconds()?
-                        this.intakeMotor.set(-0.1);
-                    } else {
-                        Commands.runOnce(() -> stopIntakeCommand(), this);
-                    }
+                    this.intakeMotor.set(-0.1);
+                    Commands.waitSeconds(0.5);
+                    Commands.runOnce(() -> stopIntakeCommand(), this);
                 }
 
                 case MID_CONE_TIPPED -> {
-                    if (scoringCycles < 25) {
-                        scoringCycles++;
-                        this.intakeMotor.set(-0.8);
-                    } else {
-                        Commands.runOnce(() -> stopIntakeCommand(), this);
-                    }
+                    this.intakeMotor.set(-0.8);
+                    Commands.waitSeconds(0.5);
+                    Commands.runOnce(() -> stopIntakeCommand(), this);
                 }
 
                 case MID_CUBE -> {
-                    if (scoringCycles < 25) {
-                        scoringCycles++;
-                        this.intakeMotor.set(-0.25);
-                    } else {
-                        Commands.runOnce(() -> stopIntakeCommand(), this);
-                    }
+                    this.intakeMotor.set(-0.25);
+                    Commands.waitSeconds(0.5);
+                    Commands.runOnce(() -> stopIntakeCommand(), this);
                 }
 
                 case MID_CUBE_AUTO -> {
-                    if (scoringCycles < 15) {
-                        scoringCycles++;
-                        this.intakeMotor.set(-0.2);
-                    } else {
-                        Commands.runOnce(() -> stopIntakeCommand(), this);
-                    }
+                    this.intakeMotor.set(-0.2);
+                    Commands.waitSeconds(0.5);
+                    Commands.runOnce(() -> stopIntakeCommand(), this);
                 }
 
                 case HIGH_CONE -> {
-                    if (scoringCycles < 65) {
-                        scoringCycles++;
-                        this.intakeMotor.set(-0.15);
-                    } else {
-                        Commands.runOnce(() -> stopIntakeCommand(), this);
-                    }
+                    this.intakeMotor.set(-0.15);
+                    Commands.waitSeconds(0.5);
+                    Commands.runOnce(() -> stopIntakeCommand(), this);
                 }
 
                 case HIGH_CONE_AUTO -> {
-                    if (scoringCycles < 35) {
-                        scoringCycles++;
-                        this.intakeMotor.set(-0.15);
-                    } else {
-                        Commands.runOnce(() -> stopIntakeCommand(), this);
-                    }
+                    this.intakeMotor.set(-0.15);
+                    Commands.waitSeconds(0.5);
+                    Commands.runOnce(() -> stopIntakeCommand(), this);
                 }
 
                 case HIGH_CUBE -> {
-                    if (scoringCycles < 25) {
-                        scoringCycles++;
-                        this.intakeMotor.set(-0.55);
-                    } else {
-                        Commands.runOnce(() -> stopIntakeCommand(), this);
-                    }
+                    this.intakeMotor.set(-0.55);
+                    Commands.waitSeconds(0.5);
+                    Commands.runOnce(() -> stopIntakeCommand(), this);
                 }
 
                 case HIGH_CUBE_AUTO -> {
-                    if (scoringCycles < 25) {
-                        scoringCycles++;
-                        this.intakeMotor.set(-0.6);
-                    } else {
-                        Commands.runOnce(() -> stopIntakeCommand(), this);
-                    }
+                    this.intakeMotor.set(-0.6);
+                    Commands.waitSeconds(0.5);
+                    Commands.runOnce(() -> stopIntakeCommand(), this);
                 }
 
                 case LOW -> {
                     if (expectingCube) {
-                        if (scoringCycles < 50) {
-                            scoringCycles++;
-                            this.intakeMotor.set(-0.3);
-                        } else {
-                            Commands.runOnce(() -> stopIntakeCommand(), this);
-                        }
+                        this.intakeMotor.set(-0.3);
+                        Commands.waitSeconds(1);
+                        Commands.runOnce(() -> stopIntakeCommand(), this);
                     } else {
-                        if (scoringCycles < 50) {
-                            scoringCycles++;
-                            this.intakeMotor.set(-0.6);
-                        } else {
-                            Commands.runOnce(() -> stopIntakeCommand(), this);
-                        }
+                        this.intakeMotor.set(-0.6);
+                        Commands.waitSeconds(1);
+                        Commands.runOnce(() -> stopIntakeCommand(), this);
                     }
                 }
 
                 case LOW_AUTO -> {
                     if (expectingCube) {
-                        if (scoringCycles < 50) {
-                            scoringCycles++;
-                            this.intakeMotor.set(-0.3);
-                        } else {
-                            Commands.runOnce(() -> stopIntakeCommand(), this);
-                        }
+                        this.intakeMotor.set(-0.3);
+                        Commands.waitSeconds(1);
+                        Commands.runOnce(() -> stopIntakeCommand(), this);
                     } else {
-                        if (scoringCycles < 50) {
-                            scoringCycles++;
-                            this.intakeMotor.set(-1.0);
-                        } else {
-                            Commands.runOnce(() -> stopIntakeCommand(), this);
-                        }
+                        this.intakeMotor.set(-1.0);
+                        Commands.waitSeconds(1);
+                        Commands.runOnce(() -> stopIntakeCommand(), this);
                     }
                 }
             }
@@ -198,7 +161,7 @@ public class Intake extends SubsystemBase {
      */
     public Command intakeHoldCommand(boolean expectingCube) {
         return run(() -> {
-            // TODO: Move constants to constants file
+            // TODO: Move constants to constants file, use guard clauses?
             intakeMotor.set(0.95); // set motor speed
 
             // if current is high enough, it means we have a gamepiece
