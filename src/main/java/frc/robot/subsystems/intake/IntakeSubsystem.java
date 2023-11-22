@@ -16,11 +16,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class IntakeSubsystem extends SubsystemBase {
 
     // create the motor
-    VictorSP intakeMotor = new VictorSP(6);
+    private VictorSP intakeMotor = new VictorSP(6);
     // for this use, we need a PDP, which is not defined right now
-    PowerDistribution pdp;
-
-    int intakeCycles = 0; // could be replace with waitSeconds()?
+    private PowerDistribution pdp;
 
     enum ScoreType {
         HIGH_CONE,
@@ -60,8 +58,6 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     public Command stopIntakeCommand() {
         return runOnce(() -> {
-            this.intakeCycles = 0;
-            // this.scoringCycles = 0;
             this.intakeMotor.set(0);
         }).ignoringDisable(true);
     }
@@ -163,20 +159,18 @@ public class IntakeSubsystem extends SubsystemBase {
         return run(() -> {
             // TODO: Move constants to constants file, use guard clauses?
             intakeMotor.set(0.95); // set motor speed
+            
+            Commands.waitUntil(() -> this.pdp.getCurrent(6) < 16);
 
-            // if current is high enough, it means we have a gamepiece
-            if (this.pdp.getCurrent(6) > 16) {
-                intakeCycles++;
-
-                if (expectingCube && this.intakeCycles > 12) {
-                    // we have a cube, so run the motor at 15%
-                    intakeMotor.set(0.15);
-                } else if (this.intakeCycles > 15) {
-                    // we have a cone, so run the motor at 18%
-                    intakeMotor.set(0.18);
-                }
-            } else {
-                intakeCycles = 0; // reset cycles when theres nothing in the intake
+            Commands.waitSeconds(IntakeConstants.INTAKE_CUBE_DELAY);
+            if (expectingCube) {
+                // we have a cube, so run the motor at 15%
+                intakeMotor.set(0.15);
+            } 
+            Commands.waitSeconds(IntakeConstants.INTAKE_CONE_DELAY);
+            if (!expectingCube) {
+                // we have a cone, so run the motor at 18%
+                intakeMotor.set(0.18);
             }
         }).finallyDo(() -> {
             intakeMotor.set(0); // set speed to 0 after stop
