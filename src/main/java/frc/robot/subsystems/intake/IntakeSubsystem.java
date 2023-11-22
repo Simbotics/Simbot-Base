@@ -2,6 +2,7 @@ package frc.robot.subsystems.intake;
 
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -31,13 +32,15 @@ public class IntakeSubsystem extends SubsystemBase {
      * 
      * This is useful for updating subsystem-specific
      * state that you don't want to offload to a Command.
+     * 
      * Teams should try to be consistent within their
      * own codebases about which responsibilities will
      * be handled by Commands, and which will be handled here.
      */
     @Override
     public void periodic() {
-        // TODO: find things to put in here, if there is anything
+        SmartDashboard.putNumber("INTAKE CURRENT", this.pdp.getCurrent(IntakeConstants.INTAKE_MOTOR_CHANNEL));
+        SmartDashboard.putNumber("INTAKE SPEED", this.intakeMotor.get());
     }
 
     /**
@@ -60,7 +63,6 @@ public class IntakeSubsystem extends SubsystemBase {
     public Command intakeScoreCommand(IntakeScoreType type, IntakeGamepieces expectedPiece) {
         return run(() -> {
 
-            // TODO: dedisgustify this code?
             // change how we are scoring by providing a different type
             switch (type) {
                 case MID_CONE -> {
@@ -146,7 +148,6 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     public Command intakeHoldCommand(IntakeGamepieces gamepiece) {
         return run(() -> {
-            // TODO: Move constants to constants file, use guard clauses?
             this.intakeMotor.set(0.95); // set motor speed
             
             Commands.waitUntil(() -> this.pdp.getCurrent(6) < 16);
@@ -163,7 +164,7 @@ public class IntakeSubsystem extends SubsystemBase {
                 this.intakeMotor.set(IntakeConstants.HOLD_CONE_SPEED);
             }
         }).finallyDo(() -> {
-            this.intakeMotor.set(0); // set speed to 0 after stop
+            this.intakeMotor.set(0); // stop motor when command is stopped/interrupted
         }).ignoringDisable(false);
     }
 
@@ -189,6 +190,7 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     @Override
     public void simulationPeriodic() {
-        // TODO: fill
+        SmartDashboard.putNumber("INTAKE CURRENT", this.pdp.getCurrent(IntakeConstants.INTAKE_MOTOR_CHANNEL));
+        SmartDashboard.putNumber("INTAKE SPEED", this.intakeMotor.get());
     }
 }
