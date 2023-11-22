@@ -18,7 +18,6 @@ import frc.robot.subsystems.intake.enums.IntakeScoreType;
  */
 public class IntakeSubsystem extends SubsystemBase {
 
-    // create the motor
     private VictorSP intakeMotor = new VictorSP(IntakeConstants.INTAKE_MOTOR_CHANNEL);
     // for this use, we need a PDP, which is not defined right now
     private PowerDistribution pdp;
@@ -49,9 +48,8 @@ public class IntakeSubsystem extends SubsystemBase {
      * @return a command that stops the intake from moving
      */
     public Command stopIntakeCommand() {
-        return runOnce(() -> {
-            this.intakeMotor.set(0);
-        }).ignoringDisable(true);
+        return runOnce(() -> this.intakeMotor.set(0))
+                .ignoringDisable(true);
     }
 
     /**
@@ -63,7 +61,7 @@ public class IntakeSubsystem extends SubsystemBase {
     public Command intakeScoreCommand(IntakeScoreType type, IntakeGamepieces expectedPiece) {
         return run(() -> {
 
-            // change how we are scoring by providing a different type
+            // we can change how we are scoring by providing a different type
             switch (type) {
                 case MID_CONE -> {
                     Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.MID_CONE), this)
@@ -148,9 +146,10 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     public Command intakeHoldCommand(IntakeGamepieces gamepiece) {
         return run(() -> {
-            this.intakeMotor.set(0.95); // set motor speed
+            this.intakeMotor.set(IntakeConstants.INTAKING_SPEED);
 
-            Commands.waitUntil(() -> this.pdp.getCurrent(6) < 16);
+            Commands.waitUntil(() -> this.pdp
+                    .getCurrent(IntakeConstants.INTAKE_MOTOR_CHANNEL) < IntakeConstants.INTAKE_AMP_THRESHOLD);
 
             // wait a short amount of time so the gamepiece gets pulled in
             Commands.waitSeconds(IntakeConstants.INTAKE_CUBE_DELAY);
@@ -163,9 +162,8 @@ public class IntakeSubsystem extends SubsystemBase {
                 // we have a cone, so run the motor at 18%
                 this.intakeMotor.set(IntakeConstants.HOLD_CONE_SPEED);
             }
-        }).finallyDo(() -> {
-            this.intakeMotor.set(0); // stop motor when command is stopped/interrupted
-        }).ignoringDisable(false);
+        }).finallyDo(() -> this.intakeMotor.set(0))
+                .ignoringDisable(false);
     }
 
     /**
@@ -174,9 +172,7 @@ public class IntakeSubsystem extends SubsystemBase {
      * @return a command that forces the intake to spit out its gamepiece
      */
     public Command outtakeCommand(double speed) {
-        return runOnce(() -> {
-            this.intakeMotor.set(-speed);
-        });
+        return runOnce(() -> this.intakeMotor.set(-speed));
     }
 
     /**
