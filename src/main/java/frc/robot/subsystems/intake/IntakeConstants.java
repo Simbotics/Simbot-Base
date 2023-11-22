@@ -3,7 +3,7 @@ package frc.robot.subsystems.intake;
 public class IntakeConstants {
 
     /** Used when scoring/outtaking */
-    public class OutakeSpeeds {
+    public class OuttakeSpeeds {
         public static final double LOW_CUBE = 0.3;
         public static final double LOW_CONE = 0.6;
         public static final double LOW_CUBE_AUTO = 0.3;
