@@ -66,74 +66,74 @@ public class IntakeSubsystem extends SubsystemBase {
             // change how we are scoring by providing a different type
             switch (type) {
                 case MID_CONE -> {
-                    Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.MID_CONE), this);
-                    Commands.waitSeconds(0.5);
-                    Commands.runOnce(() -> stopIntakeCommand(), this);
+                    Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.MID_CONE), this)
+                            .andThen(Commands.waitSeconds(0.5))
+                            .andThen(stopIntakeCommand());
                 }
 
                 case MID_CONE_TIPPED -> {
-                    Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.MID_CONE_TIPPED), this);
-                    Commands.waitSeconds(0.5);
-                    Commands.runOnce(() -> stopIntakeCommand(), this);
+                    Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.MID_CONE_TIPPED), this)
+                            .andThen(Commands.waitSeconds(0.5))
+                            .andThen(stopIntakeCommand());
                 }
 
                 case MID_CUBE -> {
-                    Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.MID_CUBE), this);
-                    Commands.waitSeconds(0.5);
-                    Commands.runOnce(() -> stopIntakeCommand(), this);
+                    Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.MID_CUBE), this)
+                            .andThen(Commands.waitSeconds(0.5))
+                            .andThen(stopIntakeCommand());
                 }
 
                 case MID_CUBE_AUTO -> {
-                    Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.MID_CUBE_AUTO), this);
-                    Commands.waitSeconds(0.5);
-                    Commands.runOnce(() -> stopIntakeCommand(), this);
+                    Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.MID_CUBE_AUTO), this)
+                            .andThen(Commands.waitSeconds(0.5))
+                            .andThen(stopIntakeCommand());
                 }
 
                 case HIGH_CONE -> {
-                    Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.HIGH_CONE), this);
-                    Commands.waitSeconds(0.5);
-                    Commands.runOnce(() -> stopIntakeCommand(), this);
+                    Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.HIGH_CONE), this)
+                            .andThen(Commands.waitSeconds(0.5))
+                            .andThen(stopIntakeCommand());
                 }
 
                 case HIGH_CONE_AUTO -> {
-                    Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.HIGH_CONE_AUTO), this);
-                    Commands.waitSeconds(0.5);
-                    Commands.runOnce(() -> stopIntakeCommand(), this);
+                    Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.HIGH_CONE_AUTO), this)
+                            .andThen(Commands.waitSeconds(0.5))
+                            .andThen(stopIntakeCommand());
                 }
 
                 case HIGH_CUBE -> {
-                    Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.HIGH_CUBE), this);
-                    Commands.waitSeconds(0.5);
-                    Commands.runOnce(() -> stopIntakeCommand(), this);
+                    Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.HIGH_CUBE), this)
+                            .andThen(Commands.waitSeconds(0.5))
+                            .andThen(stopIntakeCommand());
                 }
 
                 case HIGH_CUBE_AUTO -> {
-                    Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.HIGH_CUBE_AUTO), this);
-                    Commands.waitSeconds(0.5);
-                    Commands.runOnce(() -> stopIntakeCommand(), this);
+                    Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.HIGH_CUBE_AUTO), this)
+                            .andThen(Commands.waitSeconds(0.5))
+                            .andThen(stopIntakeCommand());
                 }
 
                 case LOW -> {
                     if (expectedPiece.equals(IntakeGamepieces.CUBE)) {
-                        Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.LOW_CUBE), this);
-                        Commands.waitSeconds(1);
-                        Commands.runOnce(() -> stopIntakeCommand(), this);
+                        Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.LOW_CUBE), this)
+                                .andThen(Commands.waitSeconds(1))
+                                .andThen(stopIntakeCommand());
                     } else {
-                        Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.LOW_CONE), this);
-                        Commands.waitSeconds(1);
-                        Commands.runOnce(() -> stopIntakeCommand(), this);
+                        Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.LOW_CONE), this)
+                                .andThen(Commands.waitSeconds(1))
+                                .andThen(stopIntakeCommand());
                     }
                 }
 
                 case LOW_AUTO -> {
                     if (expectedPiece.equals(IntakeGamepieces.CUBE)) {
-                        Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.LOW_CUBE_AUTO), this);
-                        Commands.waitSeconds(1);
-                        Commands.runOnce(() -> stopIntakeCommand(), this);
+                        Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.LOW_CUBE_AUTO), this)
+                                .andThen(Commands.waitSeconds(1))
+                                .andThen(stopIntakeCommand());
                     } else {
-                        Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.LOW_CONE_AUTO), this);
-                        Commands.waitSeconds(1);
-                        Commands.runOnce(() -> stopIntakeCommand(), this);
+                        Commands.runOnce(() -> outtakeCommand(IntakeConstants.OutakeSpeeds.LOW_CONE_AUTO), this)
+                                .andThen(Commands.waitSeconds(1))
+                                .andThen(stopIntakeCommand());
                     }
                 }
             }
@@ -149,7 +149,7 @@ public class IntakeSubsystem extends SubsystemBase {
     public Command intakeHoldCommand(IntakeGamepieces gamepiece) {
         return run(() -> {
             this.intakeMotor.set(0.95); // set motor speed
-            
+
             Commands.waitUntil(() -> this.pdp.getCurrent(6) < 16);
 
             // wait a short amount of time so the gamepiece gets pulled in
