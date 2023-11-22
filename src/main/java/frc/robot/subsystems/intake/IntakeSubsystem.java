@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.intake;
 
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
@@ -35,7 +35,7 @@ public class IntakeSubsystem extends SubsystemBase {
         LOW_AUTO
     }
 
-    public Intake(PowerDistribution pdp) {
+    public IntakeSubsystem(PowerDistribution pdp) {
         this.pdp = pdp;
     }
 
