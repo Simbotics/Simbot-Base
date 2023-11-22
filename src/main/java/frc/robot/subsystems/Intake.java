@@ -165,7 +165,7 @@ public class IntakeSubsystem extends SubsystemBase {
             intakeMotor.set(0.95); // set motor speed
 
             // if current is high enough, it means we have a gamepiece
-            if (pdp.getCurrent(6) > 16) {
+            if (this.pdp.getCurrent(6) > 16) {
                 intakeCycles++;
 
                 if (expectingCube && this.intakeCycles > 12) {
