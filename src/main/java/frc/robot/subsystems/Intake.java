@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  * Each subsystem represents a different purpose of the robot
  * such as arms, LEDs, drivetrains, shooter, etc.
  */
-public class Intake extends SubsystemBase {
+public class IntakeSubsystem extends SubsystemBase {
 
     // create the motor
     VictorSP intakeMotor = new VictorSP(6);
