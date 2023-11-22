@@ -56,6 +56,7 @@ public class IntakeSubsystem extends SubsystemBase {
      * Runs a command to score a gamepiece.
      * 
      * @param type the type of the score you want to make
+     * @param expectedPiece the type of gamepiece to expect when scoring
      * @return a command that scores a gamepiece (not including arm)
      */
     public Command intakeScoreCommand(IntakeScoreType type, IntakeGamepieces expectedPiece) {
@@ -141,8 +142,8 @@ public class IntakeSubsystem extends SubsystemBase {
     /**
      * Runs a command that intakes and holds a gamepiece
      * 
-     * @param expectingCube determines if it'll use cube mode or cone mode
-     * @return a command that intakes and holds a gamepiece
+     * @param gamepiece the type of gamepiece to expect
+     * @return a command
      */
     public Command intakeHoldCommand(IntakeGamepieces gamepiece) {
         return run(() -> {
@@ -169,6 +170,7 @@ public class IntakeSubsystem extends SubsystemBase {
     /**
      * Runs a command that spits out its intake
      * 
+     * @param speed speed to run the motor at, this is pre-inverted
      * @return a command that forces the intake to spit out its gamepiece
      */
     public Command outtakeCommand(double speed) {
