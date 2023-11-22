@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.intake.enums.IntakeGamepieces;
+import frc.robot.subsystems.intake.enums.IntakeScoreType;
 
 /**
  * This an example subsystem of our
@@ -19,19 +21,6 @@ public class IntakeSubsystem extends SubsystemBase {
     private VictorSP intakeMotor = new VictorSP(6);
     // for this use, we need a PDP, which is not defined right now
     private PowerDistribution pdp;
-
-    enum ScoreType {
-        HIGH_CONE,
-        HIGH_CONE_AUTO,
-        HIGH_CUBE,
-        HIGH_CUBE_AUTO,
-        MID_CONE,
-        MID_CONE_TIPPED,
-        MID_CUBE,
-        MID_CUBE_AUTO,
-        LOW,
-        LOW_AUTO
-    }
 
     public IntakeSubsystem(PowerDistribution pdp) {
         this.pdp = pdp;
@@ -68,7 +57,7 @@ public class IntakeSubsystem extends SubsystemBase {
      * @param type the type of the score you want to make
      * @return a command that scores a gamepiece (not including arm)
      */
-    public Command intakeScoreCommand(ScoreType type, boolean expectingCube) {
+    public Command intakeScoreCommand(IntakeScoreType type, boolean expectingCube) {
         return run(() -> {
 
             // TODO: dedisgustify this code?
@@ -155,25 +144,26 @@ public class IntakeSubsystem extends SubsystemBase {
      * @param expectingCube determines if it'll use cube mode or cone mode
      * @return a command that intakes and holds a gamepiece
      */
-    public Command intakeHoldCommand(boolean expectingCube) {
+    public Command intakeHoldCommand(IntakeGamepieces gamepiece) {
         return run(() -> {
             // TODO: Move constants to constants file, use guard clauses?
-            intakeMotor.set(0.95); // set motor speed
+            this.intakeMotor.set(0.95); // set motor speed
             
             Commands.waitUntil(() -> this.pdp.getCurrent(6) < 16);
 
+            // wait a short amount of time so the gamepiece gets pulled in
             Commands.waitSeconds(IntakeConstants.INTAKE_CUBE_DELAY);
-            if (expectingCube) {
+            if (gamepiece.equals(IntakeGamepieces.CUBE)) {
                 // we have a cube, so run the motor at 15%
-                intakeMotor.set(0.15);
-            } 
+                this.intakeMotor.set(0.15);
+            }
             Commands.waitSeconds(IntakeConstants.INTAKE_CONE_DELAY);
-            if (!expectingCube) {
+            if (gamepiece.equals(IntakeGamepieces.CONE)) {
                 // we have a cone, so run the motor at 18%
-                intakeMotor.set(0.18);
+                this.intakeMotor.set(0.18);
             }
         }).finallyDo(() -> {
-            intakeMotor.set(0); // set speed to 0 after stop
+            this.intakeMotor.set(0); // set speed to 0 after stop
         }).ignoringDisable(false);
     }
 
