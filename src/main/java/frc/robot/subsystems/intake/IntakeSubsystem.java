@@ -148,7 +148,7 @@ public class IntakeSubsystem extends SubsystemBase {
             this.intakeMotor.set(IntakeConstants.INTAKING_SPEED);
 
             // this will keep the motor running as long as the current is low enough
-            // this resulting in something similar to an if statement
+            // this results in something similar to an if statement
             Commands.waitUntil(() -> this.pdp
                     .getCurrent(IntakeConstants.INTAKE_MOTOR_CHANNEL) < IntakeConstants.INTAKE_AMP_THRESHOLD);
 
