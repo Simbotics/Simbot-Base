@@ -141,7 +141,7 @@ public class IntakeSubsystem extends SubsystemBase {
      * Runs a command that intakes and holds a gamepiece
      * 
      * @param gamepiece the type of gamepiece to expect
-     * @return a command
+     * @return a command that forces the intake hold the specified gamepiece
      */
     public Command intakeHoldCommand(IntakeGamepieces gamepiece) {
         return run(() -> {
