@@ -27,7 +27,7 @@ public class IntakeConstants {
 
     // 20ms per periodic cycle * number of periodic cycles / 1000 to get as milliseconds
     public static final double INTAKE_CUBE_DELAY = (20 * 15) / 1000;
-    public static final double INTAKE_CONE_DELAY = (20 * 3) / 1000;
+    public static final double INTAKE_CONE_DELAY = (20 * 18) / 1000;
 
     public static final double HOLD_CONE_SPEED = 0.18;
     public static final double HOLD_CUBE_SPEED = 0.15;
