@@ -61,7 +61,6 @@ public class IntakeSubsystem extends SubsystemBase {
     public Command intakeScoreCommand(IntakeScoreType type, IntakeGamepieces expectedPiece) {
         return run(() -> {
 
-            // we can change how we are scoring by providing a different type
             switch (type) {
                 case MID_CONE -> {
                     Commands.runOnce(() -> outtakeCommand(IntakeConstants.OuttakeSpeeds.MID_CONE), this)
