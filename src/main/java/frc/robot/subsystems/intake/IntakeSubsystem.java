@@ -42,7 +42,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     /**
-     * Runs an command that stops the intake
+     * Runs a command that stops the intake
      * 
      * @return a command that stops the intake from moving
      */
