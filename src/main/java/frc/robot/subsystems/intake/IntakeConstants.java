@@ -25,7 +25,7 @@ public class IntakeConstants {
     public static final int INTAKE_MOTOR_CHANNEL = 6;
     public static final double INTAKE_AMP_THRESHOLD = 16;
 
-    // 20ms per periodic cycle * number of periodic cycles / 1000 to get as millis
+    // 20ms per periodic cycle * number of periodic cycles / 1000 to get as milliseconds
     public static final double INTAKE_CUBE_DELAY = (20 * 15) / 1000;
     public static final double INTAKE_CONE_DELAY = (20 * 3) / 1000;
 
