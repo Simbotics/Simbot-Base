@@ -19,7 +19,6 @@ import frc.robot.subsystems.intake.enums.IntakeScoreType;
 public class IntakeSubsystem extends SubsystemBase {
 
     private VictorSP intakeMotor = new VictorSP(IntakeConstants.INTAKE_MOTOR_CHANNEL);
-    // for this use, we need a PDP, which is not defined right now
     private PowerDistribution pdp;
 
     public IntakeSubsystem(PowerDistribution pdp) {
