@@ -154,7 +154,6 @@ public class IntakeSubsystem extends SubsystemBase {
             // wait a short amount of time so the gamepiece gets pulled in
             Commands.waitSeconds(IntakeConstants.INTAKE_CUBE_DELAY);
             if (gamepiece.equals(IntakeGamepieces.CUBE)) {
-                // we have a cube, so run the motor at 15%
                 this.intakeMotor.set(IntakeConstants.HOLD_CUBE_SPEED);
             }
             Commands.waitSeconds(IntakeConstants.INTAKE_CONE_DELAY);
