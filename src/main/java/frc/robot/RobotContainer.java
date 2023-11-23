@@ -10,7 +10,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.generated.TunerConstants;
 
 public class RobotContainer {
@@ -18,7 +17,8 @@ public class RobotContainer {
   final double MaxAngularRate = Math.PI; // Half a rotation per second max angular velocity
 
   /* Setting up bindings for necessary control of the swerve drive platform */
-  CommandXboxController joystick = new CommandXboxController(0); // My joystick
+  CommandController driver = new CommandController(0); // Driver Controller
+  CommandController operator = new CommandController(1); // Operator Controller
   CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
   SwerveRequest.FieldCentric drive =
       new SwerveRequest.FieldCentric()
@@ -44,36 +44,34 @@ public class RobotContainer {
             .applyRequest(
                 () ->
                     drive
-                        .withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with
+                        .withVelocityX(-driver.getLeftY() * MaxSpeed) // Drive forward with
                         // negative Y (forward)
                         .withVelocityY(
-                            -joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+                            -driver.getLeftX() * MaxSpeed) // Drive left with negative X (left)
                         .withRotationalRate(
-                            -joystick.getRightX()
+                            -driver.getRightX()
                                 * MaxAngularRate) // Drive counterclockwise with negative X (left)
                 )
             .ignoringDisable(true));
 
-    joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
-    joystick
-        .b()
+    driver.greenButton().whileTrue(drivetrain.applyRequest(() -> brake));
+    driver
+        .yellowButton()
         .whileTrue(
             drivetrain.applyRequest(
                 () ->
                     point.withModuleDirection(
-                        new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
+                        new Rotation2d(-driver.getLeftY(), -driver.getLeftX()))));
 
     // if (Utils.isSimulation()) {
     //   drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
     // }
     drivetrain.registerTelemetry(logger::telemeterize);
 
-    joystick
-        .pov(0)
+    driver.POVUp()
         .whileTrue(
             drivetrain.applyRequest(() -> forwardStraight.withVelocityX(0.5).withVelocityY(0)));
-    joystick
-        .pov(180)
+    driver.POVDown()
         .whileTrue(
             drivetrain.applyRequest(() -> forwardStraight.withVelocityX(-0.5).withVelocityY(0)));
   }
@@ -88,6 +86,6 @@ public class RobotContainer {
   }
 
   public boolean seedPoseButtonDown() {
-    return joystick.leftBumper().getAsBoolean();
+    return driver.leftBumper().getAsBoolean();
   }
 }
