@@ -10,8 +10,8 @@ import frc.robot.subsystems.intake.enums.IntakeGamepieces;
 import frc.robot.subsystems.intake.enums.IntakeScoreType;
 
 /**
- * This an example subsystem of our
- * intake from 2023
+ * This an example implementation of our
+ * intake subsystem from 2023.
  * 
  * Each subsystem represents a different purpose of the robot
  * such as arms, LEDs, drivetrains, shooter, etc.
@@ -44,7 +44,7 @@ public class IntakeSubsystem extends SubsystemBase {
     /**
      * Runs a command that stops the intake
      * 
-     * @return a command that stops the intake from moving
+     * @return a command that stops the intake
      */
     public Command stopIntakeCommand() {
         return runOnce(() -> this.intakeMotor.set(0))
@@ -56,7 +56,7 @@ public class IntakeSubsystem extends SubsystemBase {
      * 
      * @param type          the type of the score you want to make
      * @param expectedPiece the type of gamepiece to expect when scoring
-     * @return a command that scores a gamepiece (not including arm)
+     * @return a command that scores a gamepiece
      */
     public Command intakeScoreCommand(IntakeScoreType type, IntakeGamepieces expectedPiece) {
         return run(() -> {
@@ -141,7 +141,7 @@ public class IntakeSubsystem extends SubsystemBase {
      * Runs a command that intakes and holds a gamepiece
      * 
      * @param gamepiece the type of gamepiece to expect
-     * @return a command that forces the intake hold the specified gamepiece
+     * @return a command that forces the intake to hold the specified gamepiece
      */
     public Command intakeHoldCommand(IntakeGamepieces gamepiece) {
         return run(() -> {
@@ -167,7 +167,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     /**
-     * Runs a command that spits out its intake
+     * Runs a command that spits out its gamepiece
      * 
      * @param speed speed to run the motor at, this is pre-inverted
      * @return a command that forces the intake to spit out its gamepiece
