@@ -20,6 +20,7 @@ jobs:
       - uses: actions/setup-java@v2
         with:
           java-version: 17
+          distribution: oracle
       - uses: axel-op/googlejavaformat-action@v3
         with:
           args: "--skip-sorting-imports --replace"
