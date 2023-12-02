@@ -2,6 +2,7 @@ package frc.robot.subsystems.led.modes;
 
 import frc.robot.subsystems.led.LEDColour;
 import frc.robot.subsystems.led.LEDConstants;
+import frc.robot.subsystems.led.LEDSubsystem;
 
 public class Solid extends LEDMode {
   private LEDColour ledColour;
@@ -27,7 +28,7 @@ public class Solid extends LEDMode {
     // LEDs
     // For every LED in the segment window, we are going to set its colour
     for (int i = minSegWindow; i < maxSegWindow; i++) {
-      LEDConstants.buffer.setRGB(
+      LEDSubsystem.ledBuffer.setRGB(
           i, ledColour.getRedInt(), ledColour.getGreenInt(), ledColour.getBlueInt());
     }
   }

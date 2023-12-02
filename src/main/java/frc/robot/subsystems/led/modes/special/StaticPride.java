@@ -1,6 +1,7 @@
 package frc.robot.subsystems.led.modes.special;
 
 import frc.robot.subsystems.led.LEDConstants;
+import frc.robot.subsystems.led.LEDSubsystem;
 import frc.robot.subsystems.led.modes.LEDMode;
 
 public class StaticPride extends LEDMode {
@@ -22,7 +23,7 @@ public class StaticPride extends LEDMode {
     // LEDs
 
     for (int i = minSegWindow; i < maxSegWindow; i++) {
-      LEDConstants.buffer.setHSV(i, (int) ((i * 5) % 180), 255, 255);
+      LEDSubsystem.ledBuffer.setHSV(i, (int) ((i * 5) % 180), 255, 255);
     }
   }
 }

@@ -2,6 +2,7 @@ package frc.robot.subsystems.led.modes.special;
 
 import frc.robot.subsystems.led.LEDColour;
 import frc.robot.subsystems.led.LEDConstants;
+import frc.robot.subsystems.led.LEDSubsystem;
 import frc.robot.subsystems.led.modes.LEDMode;
 
 public class RGBSplit extends LEDMode {
@@ -34,16 +35,16 @@ public class RGBSplit extends LEDMode {
     // belongs to
     for (int i = minSegWindow; i < maxSegWindow; i++) {
       if (i < minSegWindow + segmentSize) {
-        LEDConstants.buffer.setRGB(
+        LEDSubsystem.ledBuffer.setRGB(
             i, redLedColour.getRedInt(), redLedColour.getGreenInt(), redLedColour.getBlueInt());
       } else if (i < minSegWindow + 2 * segmentSize) {
-        LEDConstants.buffer.setRGB(
+        LEDSubsystem.ledBuffer.setRGB(
             i,
             greenLedColour.getRedInt(),
             greenLedColour.getGreenInt(),
             greenLedColour.getBlueInt());
       } else {
-        LEDConstants.buffer.setRGB(
+        LEDSubsystem.ledBuffer.setRGB(
             i, blueLedColour.getRedInt(), blueLedColour.getGreenInt(), blueLedColour.getBlueInt());
       }
     }

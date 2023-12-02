@@ -2,6 +2,7 @@ package frc.robot.subsystems.led.modes.special;
 
 import frc.robot.subsystems.led.LEDColour;
 import frc.robot.subsystems.led.LEDConstants;
+import frc.robot.subsystems.led.LEDSubsystem;
 import frc.robot.subsystems.led.modes.LEDMode;
 
 public class PrideBi extends LEDMode {
@@ -34,19 +35,19 @@ public class PrideBi extends LEDMode {
     // belongs to
     for (int i = minSegWindow; i < maxSegWindow; i++) {
       if (i < minSegWindow + segmentSize) {
-        LEDConstants.buffer.setRGB(
+        LEDSubsystem.ledBuffer.setRGB(
             i,
             magentaLedColour.getRedInt(),
             magentaLedColour.getGreenInt(),
             magentaLedColour.getBlueInt());
       } else if (i < minSegWindow + 2 * segmentSize) {
-        LEDConstants.buffer.setRGB(
+        LEDSubsystem.ledBuffer.setRGB(
             i,
             purpleLedColour.getRedInt(),
             purpleLedColour.getGreenInt(),
             purpleLedColour.getBlueInt());
       } else {
-        LEDConstants.buffer.setRGB(
+        LEDSubsystem.ledBuffer.setRGB(
             i,
             royalBlueLedColour.getRedInt(),
             royalBlueLedColour.getGreenInt(),

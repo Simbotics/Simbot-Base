@@ -3,6 +3,7 @@ package frc.robot.subsystems.led.modes;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.subsystems.led.LEDColour;
 import frc.robot.subsystems.led.LEDConstants;
+import frc.robot.subsystems.led.LEDSubsystem;
 
 public class Breathing extends LEDMode {
   private int cycle;
@@ -24,7 +25,7 @@ public class Breathing extends LEDMode {
     int maxSegWindow = minSegWindow + LEDConstants.ledsPerSegment;
 
     for (int i = minSegWindow; i < maxSegWindow; i++) {
-      LEDConstants.buffer.setLED(i, calculateBreathingColor());
+      LEDSubsystem.ledBuffer.setLED(i, calculateBreathingColor());
     }
 
     this.cycle++;

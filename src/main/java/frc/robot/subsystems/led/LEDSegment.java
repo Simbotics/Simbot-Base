@@ -31,10 +31,10 @@ public enum LEDSegment {
    *
    * @return True if it is within the index bounds, false if it isn't
    */
-  public boolean isValid() {
+  private boolean isValid() {
     // Return a boolean based on if the segment number is greater than number of
     // segments
-    return (this.getSegmentNumber() > LEDConstants.numberOfSegments);
+    return (this.getSegmentNumber() < LEDSubsystem.ledSegments.size());
   }
 
   /**
@@ -50,7 +50,7 @@ public enum LEDSegment {
           String.format(
               "Invalid LED segment: %d. Number of segments: %d",
               this.getSegmentNumber(),
-              LEDConstants.numberOfSegments)); // Throw an exception with the segment information
+              LEDSubsystem.ledSegments.size())); // Throw an exception with the segment information
     }
 
     this.ledMode = ledMode;

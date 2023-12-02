@@ -1,6 +1,7 @@
 package frc.robot.subsystems.led.modes.special;
 
 import frc.robot.subsystems.led.LEDConstants;
+import frc.robot.subsystems.led.LEDSubsystem;
 import frc.robot.subsystems.led.modes.LEDMode;
 
 public class Rainbow extends LEDMode {
@@ -28,7 +29,7 @@ public class Rainbow extends LEDMode {
             / rainbowSpeed; // Calculate the hue based off the speed and the current system time
 
     for (int i = minSegWindow; i < maxSegWindow; i++) {
-      LEDConstants.buffer.setHSV(i, (int) ((hue + i * 5) % 180), 255, 255);
+      LEDSubsystem.ledBuffer.setHSV(i, (int) ((hue + i * 5) % 180), 255, 255);
     }
   }
 }
