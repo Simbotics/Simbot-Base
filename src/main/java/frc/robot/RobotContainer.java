@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.led.LEDSubsystem;
 
 public class RobotContainer {
   final double MaxSpeed = 6; // 6 meters per second desired top speed
@@ -20,6 +21,7 @@ public class RobotContainer {
   CommandController driver = new CommandController(0); // Driver Controller
   CommandController operator = new CommandController(1); // Operator Controller
   CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
+  private final LEDSubsystem ledSubsystem;
   SwerveRequest.FieldCentric drive =
       new SwerveRequest.FieldCentric()
           .withIsOpenLoop(true)
@@ -39,6 +41,8 @@ public class RobotContainer {
   Pose2d odomStart = new Pose2d(0, 0, new Rotation2d(0, 0));
 
   private void configureBindings() {
+    ledSubsystem.setDefaultCommand(new InstantCommand(() -> ledSubsystem.periodic(), ledSubsystem));
+
     drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
         drivetrain
             .applyRequest(
@@ -67,7 +71,6 @@ public class RobotContainer {
     //   drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
     // }
     drivetrain.registerTelemetry(logger::telemeterize);
-
     driver.POVUp()
         .whileTrue(
             drivetrain.applyRequest(() -> forwardStraight.withVelocityX(0.5).withVelocityY(0)));
@@ -78,6 +81,7 @@ public class RobotContainer {
 
   public RobotContainer() {
     configureBindings();
+    ledSubsystem = new LEDSubsystem();
   }
 
   public Command getAutonomousCommand() {
