@@ -20,7 +20,7 @@ public class LEDSubsystem extends SubsystemBase {
   public void periodic() {
     // For every segment that is registered, run the periodic function
     for (LEDSegment ledSegment : ledSegments) {
-      ledSegment.getLedMode().periodic(ledSegment.getIndex());
+      ledSegment.getLedMode().periodic(ledSegment.getSegmentIdentifier());
     }
   }
 
