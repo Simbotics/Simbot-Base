@@ -12,9 +12,11 @@ public class LEDSubsystem extends SubsystemBase {
 
   public static List<LEDSegment> ledSegments = new ArrayList<>();
 
-  public static AddressableLED leds = new AddressableLED(0); // The PWM port the LEDs are plugged into
-  public static AddressableLEDBuffer ledBuffer = new AddressableLEDBuffer(
-      (ledSegments.size() * LEDConstants.ledsPerSegment)); // The buffer that holds the LED data
+  public static AddressableLED leds =
+      new AddressableLED(0); // The PWM port the LEDs are plugged into
+  public static AddressableLEDBuffer ledBuffer =
+      new AddressableLEDBuffer(
+          (ledSegments.size() * LEDConstants.ledsPerSegment)); // The buffer that holds the LED data
 
   @Override
   public void periodic() {
@@ -33,8 +35,7 @@ public class LEDSubsystem extends SubsystemBase {
     ledSegments.add(LEDSegment.FrontRight);
 
     leds.setLength(
-        (ledSegments.size()
-            * LEDConstants.ledsPerSegment)); // Set the length of the LED strip
+        (ledSegments.size() * LEDConstants.ledsPerSegment)); // Set the length of the LED strip
 
     leds.start(); // Start the LED strip
   }
@@ -42,9 +43,8 @@ public class LEDSubsystem extends SubsystemBase {
   /**
    * Sets the mode for all segments available
    *
-   * @param ledMode The mode to set them all as. Please see the modes directory
-   *                for all available
-   *                modes
+   * @param ledMode The mode to set them all as. Please see the modes directory for all available
+   *     modes
    */
   public void setAllSegmentModesCommand(LEDMode ledMode) {
     // For every segment we can set the mode of, set the mode as the one provided
