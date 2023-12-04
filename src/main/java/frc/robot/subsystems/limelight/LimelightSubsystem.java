@@ -13,7 +13,7 @@ public class LimelightSubsystem extends SubsystemBase {
     private final Limelight[] limelights;
     private final LimelightIOData[] limelightData;
 
-    private final List<LimelightSubsystem.PoseAndTimestamp> results = new ArrayList<>();
+    private final List<LimelightPoseAndTimestamp> results = new ArrayList<>();
 
     
     private int acceptableTagID;
@@ -26,77 +26,59 @@ public class LimelightSubsystem extends SubsystemBase {
      */
     public LimelightSubsystem(Limelight[] limelights) {
         this.limelights = limelights;
-        limelightData = new LimelightIOData[limelights.length];
+        this.limelightData = new LimelightIOData[this.limelights.length];
 
-        for (int i = 0; i < limelights.length; i++) {
-            limelightData[i] = new LimelightIOData();
+        for (int i = 0; i < this.limelights.length; i++) {
+            this.limelightData[i] = new LimelightIOData();
         }
     }
 
     @Override
     public void periodic() {
+        // Clear results from last periodic
+        this.results.clear();
 
-        // clear results from last periodic
-        results.clear();
-
-        for (int i = 0; i < limelightData.length; i++) {
+        for (int i = 0; i < this.limelightData.length; i++) {
             // update and process new inputs
-            limelights[i].updateData(limelightData[i]);
+            this.limelights[i].updateData(limelightData[i]);
 
-            if (limelightData[i].lockedOnTarget
-                    && limelightData[i].isNewPose
+            if (this.limelightData[i].lockedOnTarget
+                    && this.limelightData[i].isNewPose
                     && !DriverStation.isAutonomous()
-                    && limelightData[i].maxDistance < LimelightConstants.LOWEST_DISTANCE) {
-                if (useSingleTag) {
-                    if (limelightData[i].singleIDUsed == acceptableTagID) {
-                        processLimelight(i);
+                    && this.limelightData[i].maxDistance < LimelightConstants.LOWEST_DISTANCE) {
+                if (this.useSingleTag) {
+                    if (this.limelightData[i].singleIDUsed == this.acceptableTagID) {
+                        this.processLimelight(i);
                     }
                 } else {
-                    processLimelight(i);
+                    this.processLimelight(i);
                 }
             }
         }
     }
 
+    /**
+     * Processes the limelight data and adds the pose to the list of poses
+     * @param limelightNumber The numerical ID of the limelight
+     */
     public void processLimelight(int limelightNumber) {
         // Create a new pose based off the new limelight data
         Pose2d currentPose =
-                new Pose2d(limelightData[limelightNumber].x, limelightData[limelightNumber].y, new Rotation2d(limelightData[limelightNumber].rotation));
+                new Pose2d(this.limelightData[limelightNumber].x, this.limelightData[limelightNumber].y, new Rotation2d(this.limelightData[limelightNumber].rotation));
 
         // Add the new pose to the list of poses
-        results.add(new PoseAndTimestamp(currentPose, limelightData[limelightNumber].timestamp));
+        this.results.add(new LimelightPoseAndTimestamp(currentPose, limelightData[limelightNumber].timestamp));
     }
 
     /**
      * Returns the last recorded pose
      */
-    public List<LimelightSubsystem.PoseAndTimestamp> getLimelightOdometry() {
-        return results;
-    }
-    
-    /**
-     * Inner class to record a pose and its timestamp
-     */
-    public static class PoseAndTimestamp {
-        Pose2d pose;
-        double timestamp;
-
-        public PoseAndTimestamp(Pose2d pose, double timestamp) {
-            this.pose = pose;
-            this.timestamp = timestamp;
-        }
-
-        public Pose2d getPose() {
-            return pose;
-        }
-
-        public double getTimestamp() {
-            return timestamp;
-        }
+    public List<LimelightPoseAndTimestamp> getLimelightOdometry() {
+        return this.results;
     }
 
     public void setUseSingleTag(boolean useSingleTag) {
-        setUseSingleTag(useSingleTag, 0);
+        this.setUseSingleTag(useSingleTag, 0);
     }
 
     public void setUseSingleTag(boolean useSingleTag, int acceptableTagID) {
@@ -105,12 +87,12 @@ public class LimelightSubsystem extends SubsystemBase {
     }
 
     public void setReferencePose(Pose2d pose) {
-        for (Limelight limelight : limelights) {
+        for (Limelight limelight : this.limelights) {
             limelight.setRefrencePose(pose);
         }
     }
 
     public double getMinDistance(int camera) {
-        return limelightData[camera].minDistance;
+        return this.limelightData[camera].minDistance;
     }
 }
