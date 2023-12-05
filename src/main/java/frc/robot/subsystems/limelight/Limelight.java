@@ -42,7 +42,8 @@ public class Limelight implements LimelightIO {
       robotPoseEntry = this.networkTable.getEntry("botpose");
     }
 
-    LimelightPoseData limelightPoseData = new LimelightPoseData(robotPoseEntry.getDoubleArray(new double[7]));
+    LimelightPoseData limelightPoseData =
+        new LimelightPoseData(robotPoseEntry.getDoubleArray(new double[7]));
 
     // Create a 3d pose from data from the limelight
     Pose3d limelightPose = limelightPoseData.toPose3d();
@@ -56,7 +57,8 @@ public class Limelight implements LimelightIO {
 
     if (limelightIOData.lockedOnTarget) {
       // Set the time that the limelight was updated
-      limelightIOData.limelightLastUpdated = Timer.getFPGATimestamp() - limelightPoseData.getTotalLatency();
+      limelightIOData.limelightLastUpdated =
+          Timer.getFPGATimestamp() - limelightPoseData.getTotalLatency();
 
       limelightIOData.isNewPose = true;
 

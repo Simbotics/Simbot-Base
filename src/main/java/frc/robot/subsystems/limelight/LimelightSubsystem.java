@@ -71,7 +71,8 @@ public class LimelightSubsystem extends SubsystemBase {
 
     // Add the new pose to the list of poses
     this.results.add(
-        new LimelightPoseAndTimestamp(currentPose, limelightData[limelightNumber].limelightLastUpdated));
+        new LimelightPoseAndTimestamp(
+            currentPose, limelightData[limelightNumber].limelightLastUpdated));
   }
 
   /** Returns the last recorded pose */
