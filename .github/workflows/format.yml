@@ -23,4 +23,4 @@ jobs:
           distribution: 'oracle'
       - uses: axel-op/googlejavaformat-action@v3
         with:
-          args: "--skip-sorting-imports --replace"
+          args: "--skip-sorting-imports --replace --length 120"
