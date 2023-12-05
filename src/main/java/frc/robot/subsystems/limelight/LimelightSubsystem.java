@@ -65,13 +65,13 @@ public class LimelightSubsystem extends SubsystemBase {
     // Create a new pose based off the new limelight data
     Pose2d currentPose =
         new Pose2d(
-            this.limelightData[limelightNumber].x,
-            this.limelightData[limelightNumber].y,
-            new Rotation2d(this.limelightData[limelightNumber].rotation));
+            this.limelightData[limelightNumber].limelightX,
+            this.limelightData[limelightNumber].limelightY,
+            new Rotation2d(this.limelightData[limelightNumber].limelightRotation));
 
     // Add the new pose to the list of poses
     this.results.add(
-        new LimelightPoseAndTimestamp(currentPose, limelightData[limelightNumber].timestamp));
+        new LimelightPoseAndTimestamp(currentPose, limelightData[limelightNumber].limelightLastUpdated));
   }
 
   /** Returns the last recorded pose */

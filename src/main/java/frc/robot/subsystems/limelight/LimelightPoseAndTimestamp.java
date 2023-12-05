@@ -3,19 +3,19 @@ package frc.robot.subsystems.limelight;
 import edu.wpi.first.math.geometry.Pose2d;
 
 public class LimelightPoseAndTimestamp {
-  Pose2d pose;
-  double timestamp;
+  Pose2d limelightPose;
+  double lastUpdatedTimestamp;
 
-  public LimelightPoseAndTimestamp(Pose2d pose, double timestamp) {
-    this.pose = pose;
-    this.timestamp = timestamp;
+  public LimelightPoseAndTimestamp(Pose2d limelightPose, double lastUpdatedTimestamp) {
+    this.limelightPose = limelightPose;
+    this.lastUpdatedTimestamp = lastUpdatedTimestamp;
   }
 
-  public Pose2d getPose() {
-    return this.pose;
+  public Pose2d getLimelightPose() {
+    return this.limelightPose;
   }
 
-  public double getTimestamp() {
-    return this.timestamp;
+  public double getLastUpdatedTimestamp() {
+    return this.lastUpdatedTimestamp;
   }
 }

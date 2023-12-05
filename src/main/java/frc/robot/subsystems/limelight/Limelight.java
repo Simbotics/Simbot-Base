@@ -2,7 +2,6 @@ package frc.robot.subsystems.limelight;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -13,19 +12,19 @@ import frc.robot.subsystems.limelight.enums.LimelightLEDMode;
 import frc.robot.subsystems.limelight.enums.LimelightStream;
 
 public class Limelight implements LimelightIO {
-  private String name; // The name of the limelight
+  private String limelightName;
   private NetworkTable networkTable;
 
   /**
    * Creates a new limelight
    *
-   * @param name The name of the limelight
+   * @param limelightName The name of the limelight
    */
-  public Limelight(String name) {
-    this.name = name;
+  public Limelight(String limelightName) {
+    this.limelightName = limelightName;
 
     // Initializes and sets camera and pipeline of the limelight
-    this.networkTable = NetworkTableInstance.getDefault().getTable(this.name);
+    this.networkTable = NetworkTableInstance.getDefault().getTable(this.limelightName);
     this.networkTable.getEntry("camera").setNumber(0);
     this.networkTable.getEntry("pipeline").setNumber(0);
   }
@@ -33,7 +32,6 @@ public class Limelight implements LimelightIO {
   @Override
   public void updateData(LimelightIOData limelightIOData) {
     NetworkTableEntry robotPoseEntry;
-    double[] dataFromLimelight;
 
     // Sets the pose of the limelight based on what alliance we are on
     if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) {
@@ -44,18 +42,10 @@ public class Limelight implements LimelightIO {
       robotPoseEntry = this.networkTable.getEntry("botpose");
     }
 
-    dataFromLimelight = robotPoseEntry.getDoubleArray(new double[7]);
+    LimelightPoseData limelightPoseData = new LimelightPoseData(robotPoseEntry.getDoubleArray(new double[7]));
 
     // Create a 3d pose from data from the limelight
-    Pose3d pose =
-        new Pose3d(
-            dataFromLimelight[0],
-            dataFromLimelight[1],
-            dataFromLimelight[2],
-            new Rotation3d(
-                Math.toRadians(dataFromLimelight[3]),
-                Math.toRadians(dataFromLimelight[4]),
-                Math.toRadians(dataFromLimelight[5]))); // .transformBy(cameraOffset);
+    Pose3d limelightPose = limelightPoseData.toPose3d();
 
     // Set if the limelight is locked onto a target
     if (this.networkTable.getEntry("tv").getDouble(0) == 1) {
@@ -64,12 +54,9 @@ public class Limelight implements LimelightIO {
       limelightIOData.lockedOnTarget = false;
     }
 
-    // Calculate the latency of the limelight
-    double latency = dataFromLimelight[6] / 1000;
-
     if (limelightIOData.lockedOnTarget) {
       // Set the time that the limelight was updated
-      limelightIOData.timestamp = Timer.getFPGATimestamp() - latency;
+      limelightIOData.limelightLastUpdated = Timer.getFPGATimestamp() - limelightPoseData.getTotalLatency();
 
       limelightIOData.isNewPose = true;
 
@@ -78,11 +65,11 @@ public class Limelight implements LimelightIO {
       limelightIOData.targetY = this.networkTable.getEntry("ty").getDouble(0);
 
       // Set the pose of the limelight (x, y, rotation)
-      Pose2d pose2d = pose.toPose2d();
-      limelightIOData.x = pose2d.getX();
-      limelightIOData.y = pose2d.getY();
-      limelightIOData.rotation = pose2d.getRotation().getRadians();
-      limelightIOData.pose = pose2d;
+      Pose2d pose2d = limelightPose.toPose2d();
+      limelightIOData.limelightX = pose2d.getX();
+      limelightIOData.limelightY = pose2d.getY();
+      limelightIOData.limelightRotation = pose2d.getRotation().getRadians();
+      limelightIOData.limelightPose = pose2d;
 
     } else {
       limelightIOData.isNewPose = false;
@@ -96,7 +83,7 @@ public class Limelight implements LimelightIO {
   /** Gets the name of a limelight that's registered into the network table */
   @Override
   public String getName() {
-    return this.name;
+    return this.limelightName;
   }
 
   /**
@@ -106,13 +93,7 @@ public class Limelight implements LimelightIO {
    *     options)
    */
   public void setLEDMode(LimelightLEDMode limelightLEDMode) {
-    switch (limelightLEDMode) {
-      case PIPELINE_DEFAULT -> this.networkTable.getEntry("ledMode").setNumber(0);
-      case OFF -> this.networkTable.getEntry("ledMode").setNumber(1);
-      case BLINK -> this.networkTable.getEntry("ledMode").setNumber(2);
-      case ON -> this.networkTable.getEntry("ledMode").setNumber(3);
-      default -> this.networkTable.getEntry("ledMode").setNumber(0); // Default to pipeline default
-    }
+    this.networkTable.getEntry("ledMode").setNumber(limelightLEDMode.getNetworkTableValue());
   }
 
   /**
@@ -121,12 +102,7 @@ public class Limelight implements LimelightIO {
    * @param stream The streaming mode to set the limelight to as a limelight stream type
    */
   public void setStream(LimelightStream limelightStream) {
-    switch (limelightStream) {
-      case STANDARD -> this.networkTable.getEntry("stream").setNumber(0);
-      case PIP_MAIN -> this.networkTable.getEntry("stream").setNumber(1);
-      case PIP_SECONDARY -> this.networkTable.getEntry("stream").setNumber(2);
-      default -> this.networkTable.getEntry("stream").setNumber(0); // Default to standard
-    }
+    this.networkTable.getEntry("stream").setNumber(limelightStream.getNetworkTableValue());
   }
 
   /**
@@ -144,8 +120,8 @@ public class Limelight implements LimelightIO {
    * @param pose The pose to retrieve and display the values from
    */
   public void displayLimelightPoseValues(Pose2d pose) {
-    SmartDashboard.putNumber(this.name + " x", pose.getX());
-    SmartDashboard.putNumber(this.name + " y", pose.getY());
-    SmartDashboard.putNumber(this.name + " angleDegrees", pose.getRotation().getDegrees());
+    SmartDashboard.putNumber(this.limelightName + " x", pose.getX());
+    SmartDashboard.putNumber(this.limelightName + " y", pose.getY());
+    SmartDashboard.putNumber(this.limelightName + " angleDegrees", pose.getRotation().getDegrees());
   }
 }

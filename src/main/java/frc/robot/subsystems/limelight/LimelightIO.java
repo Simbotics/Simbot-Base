@@ -6,16 +6,16 @@ public interface LimelightIO {
 
   /** Data that the limelight will collect and track */
   class LimelightIOData {
-    public double x; // x position of the limelight itself
-    public double y; // y position of the limelight itself
-    public double rotation; // rotation of the limelight itself
+    public double limelightX;
+    public double limelightY;
+    public double limelightRotation;
 
-    public double targetX; // x position of the target
-    public double targetY; // y position of the target
+    public double targetX;
+    public double targetY;
 
     public boolean isNewPose;
-    public Pose2d pose;
-    public double timestamp;
+    public Pose2d limelightPose;
+    public double limelightLastUpdated;
 
     public double maxDistance;
     public double minDistance;
