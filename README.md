@@ -10,3 +10,5 @@ Thank you to the following who has contributed, supplied the tools to make this 
 - [Ian Tapply](https://github.com/IanTapply22) - Main student contributor
 - [Kaleb Dodd](https://github.com/kaleb-dodd) - Project coordinator
 - [Cole MacPhail](https://github.com/colemacphail) - Project coordinator
+
+Testing automatic PR commenting for guidelines
