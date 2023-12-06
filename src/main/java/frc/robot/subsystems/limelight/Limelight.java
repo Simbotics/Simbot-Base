@@ -14,6 +14,7 @@ import frc.robot.subsystems.limelight.enums.LimelightStream;
 public class Limelight implements LimelightIO {
   private String limelightName;
   private NetworkTable networkTable;
+  private LimelightPoseData limelightPoseData;
 
   /**
    * Creates a new limelight
@@ -33,6 +34,11 @@ public class Limelight implements LimelightIO {
   public void updateData(LimelightIOData limelightIOData) {
     NetworkTableEntry robotPoseEntry;
 
+    // Creates a new limelight pose data instance if it doesn't exist
+    if (this.limelightPoseData == null) {
+      this.limelightPoseData = new LimelightPoseData(new double[7]);
+    }
+
     // Sets the pose of the limelight based on what alliance we are on
     if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) {
       robotPoseEntry = this.networkTable.getEntry("botpose_wpiblue");
@@ -42,8 +48,8 @@ public class Limelight implements LimelightIO {
       robotPoseEntry = this.networkTable.getEntry("botpose");
     }
 
-    LimelightPoseData limelightPoseData =
-        new LimelightPoseData(robotPoseEntry.getDoubleArray(new double[7]));
+    // Update the limelight pose data
+    this.limelightPoseData.update(robotPoseEntry.getDoubleArray(new double[7]));
 
     // Create a 3d pose from data from the limelight
     Pose3d limelightPose = limelightPoseData.toPose3d();
