@@ -28,6 +28,7 @@ public class LimelightPoseData {
 
   /**
    * Updates the pose data without creating a new instance of limelight pose data
+   *
    * @param data The data to update the pose data with
    */
   public void update(double[] data) {
@@ -46,6 +47,7 @@ public class LimelightPoseData {
 
   /**
    * Gets the x position of the limelight
+   *
    * @return The x position of the limelight
    */
   public double getX() {
@@ -54,6 +56,7 @@ public class LimelightPoseData {
 
   /**
    * Gets the y position of the limelight
+   *
    * @return The y position of the limelight
    */
   public double getY() {
@@ -62,6 +65,7 @@ public class LimelightPoseData {
 
   /**
    * Gets the z position of the limelight
+   *
    * @return The z position of the limelight
    */
   public double getZ() {
@@ -70,6 +74,7 @@ public class LimelightPoseData {
 
   /**
    * Gets a 3d rotation position of the limelight
+   *
    * @return The 3d rotation position of the limelight
    */
   public Rotation3d getRotation() {
@@ -79,6 +84,7 @@ public class LimelightPoseData {
 
   /**
    * Gets the raw latency of the limelight straight from the network table
+   *
    * @return The raw latency of the limelight straight from the network table
    */
   public double getRawTotalLatency() {
@@ -87,6 +93,7 @@ public class LimelightPoseData {
 
   /**
    * Gets the total latency of the limelight in seconds
+   *
    * @return The total latency of the limelight in seconds
    */
   public double getTotalLatency() {
@@ -95,6 +102,7 @@ public class LimelightPoseData {
 
   /**
    * Converts the limelight pose data to a 3d pose
+   *
    * @return A 3d pose of the limelight pose data
    */
   public Pose3d toPose3d() {
