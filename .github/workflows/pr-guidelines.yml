@@ -1,3 +1,5 @@
+name: 'PR Guidelines'
+
 on:
   pull_request:
     branches:
