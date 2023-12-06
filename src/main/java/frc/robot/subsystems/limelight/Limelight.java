@@ -26,8 +26,8 @@ public class Limelight implements LimelightIO {
 
     // Initializes and sets camera and pipeline of the limelight
     this.networkTable = NetworkTableInstance.getDefault().getTable(this.limelightName);
-    this.networkTable.getEntry("camera").setNumber(0);
-    this.networkTable.getEntry("pipeline").setNumber(0);
+    this.networkTable.getEntry(LimelightConstants.TableConstants.CAMERA).setNumber(0);
+    this.networkTable.getEntry(LimelightConstants.TableConstants.PIPELINE).setNumber(0);
   }
 
   @Override
@@ -41,11 +41,11 @@ public class Limelight implements LimelightIO {
 
     // Sets the pose of the limelight based on what alliance we are on
     if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) {
-      robotPoseEntry = this.networkTable.getEntry("botpose_wpiblue");
+      robotPoseEntry = this.networkTable.getEntry(LimelightConstants.TableConstants.BOT_POSE_BLUE);
     } else if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-      robotPoseEntry = this.networkTable.getEntry("botpose_wpired");
+      robotPoseEntry = this.networkTable.getEntry(LimelightConstants.TableConstants.BOT_POSE_RED);
     } else {
-      robotPoseEntry = this.networkTable.getEntry("botpose");
+      robotPoseEntry = this.networkTable.getEntry(LimelightConstants.TableConstants.BOT_POSE);
     }
 
     // Update the limelight pose data
@@ -55,7 +55,7 @@ public class Limelight implements LimelightIO {
     Pose3d limelightPose = limelightPoseData.toPose3d();
 
     // Set if the limelight is locked onto a target
-    if (this.networkTable.getEntry("tv").getDouble(0) == 1) {
+    if (this.networkTable.getEntry(LimelightConstants.TableConstants.VALID_TARGET).getDouble(0) == 1) {
       limelightIOData.lockedOnTarget = true;
     } else {
       limelightIOData.lockedOnTarget = false;
@@ -69,8 +69,8 @@ public class Limelight implements LimelightIO {
       limelightIOData.isNewPose = true;
 
       // Set the target x and y
-      limelightIOData.targetX = this.networkTable.getEntry("tx").getDouble(0);
-      limelightIOData.targetY = this.networkTable.getEntry("ty").getDouble(0);
+      limelightIOData.targetX = this.networkTable.getEntry(LimelightConstants.TableConstants.TARGET_X).getDouble(0);
+      limelightIOData.targetY = this.networkTable.getEntry(LimelightConstants.TableConstants.TARGET_Y).getDouble(0);
 
       // Set the pose of the limelight (x, y, rotation)
       Pose2d pose2d = limelightPose.toPose2d();
@@ -101,7 +101,7 @@ public class Limelight implements LimelightIO {
    *     options)
    */
   public void setLEDMode(LimelightLEDMode limelightLEDMode) {
-    this.networkTable.getEntry("ledMode").setNumber(limelightLEDMode.getNetworkTableValue());
+    this.networkTable.getEntry(LimelightConstants.TableConstants.LED_MODE).setNumber(limelightLEDMode.getNetworkTableValue());
   }
 
   /**
@@ -110,7 +110,7 @@ public class Limelight implements LimelightIO {
    * @param stream The streaming mode to set the limelight to as a limelight stream type
    */
   public void setStream(LimelightStream limelightStream) {
-    this.networkTable.getEntry("stream").setNumber(limelightStream.getNetworkTableValue());
+    this.networkTable.getEntry(LimelightConstants.TableConstants.STREAM).setNumber(limelightStream.getNetworkTableValue());
   }
 
   /**
@@ -119,7 +119,7 @@ public class Limelight implements LimelightIO {
    * @param pipeline The pipeline to set the limelight to as an integer
    */
   public void setPipeline(int pipeline) {
-    this.networkTable.getEntry("pipeline").setNumber(pipeline);
+    this.networkTable.getEntry(LimelightConstants.TableConstants.PIPELINE).setNumber(pipeline);
   }
 
   /**
