@@ -55,7 +55,8 @@ public class Limelight implements LimelightIO {
     Pose3d limelightPose = limelightPoseData.toPose3d();
 
     // Set if the limelight is locked onto a target
-    if (this.networkTable.getEntry(LimelightConstants.TableConstants.VALID_TARGET).getDouble(0) == 1) {
+    if (this.networkTable.getEntry(LimelightConstants.TableConstants.VALID_TARGET).getDouble(0)
+        == 1) {
       limelightIOData.lockedOnTarget = true;
     } else {
       limelightIOData.lockedOnTarget = false;
@@ -69,8 +70,10 @@ public class Limelight implements LimelightIO {
       limelightIOData.isNewPose = true;
 
       // Set the target x and y
-      limelightIOData.targetX = this.networkTable.getEntry(LimelightConstants.TableConstants.TARGET_X).getDouble(0);
-      limelightIOData.targetY = this.networkTable.getEntry(LimelightConstants.TableConstants.TARGET_Y).getDouble(0);
+      limelightIOData.targetX =
+          this.networkTable.getEntry(LimelightConstants.TableConstants.TARGET_X).getDouble(0);
+      limelightIOData.targetY =
+          this.networkTable.getEntry(LimelightConstants.TableConstants.TARGET_Y).getDouble(0);
 
       // Set the pose of the limelight (x, y, rotation)
       Pose2d pose2d = limelightPose.toPose2d();
@@ -101,7 +104,9 @@ public class Limelight implements LimelightIO {
    *     options)
    */
   public void setLEDMode(LimelightLEDMode limelightLEDMode) {
-    this.networkTable.getEntry(LimelightConstants.TableConstants.LED_MODE).setNumber(limelightLEDMode.getNetworkTableValue());
+    this.networkTable
+        .getEntry(LimelightConstants.TableConstants.LED_MODE)
+        .setNumber(limelightLEDMode.getNetworkTableValue());
   }
 
   /**
@@ -110,7 +115,9 @@ public class Limelight implements LimelightIO {
    * @param stream The streaming mode to set the limelight to as a limelight stream type
    */
   public void setStream(LimelightStream limelightStream) {
-    this.networkTable.getEntry(LimelightConstants.TableConstants.STREAM).setNumber(limelightStream.getNetworkTableValue());
+    this.networkTable
+        .getEntry(LimelightConstants.TableConstants.STREAM)
+        .setNumber(limelightStream.getNetworkTableValue());
   }
 
   /**
