@@ -1,0 +1,22 @@
+name: 'PR Guidelines'
+
+on:
+  pull_request:
+    types: [ opened ]
+    branches:
+      - main
+      - 2024-beta
+
+jobs:
+    build:
+        name: Send PR guidelines
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: Comment a pull_request
+              uses: mb2dev/github-action-comment-pull-request@1.0.0
+              with:
+                message: "Thank you for making a pull request! Please make sure to follow the [pull request guidelines](https://dev.to/karaluton/a-guide-to-perfecting-pull-requests-2b66) for this PR. This applies to your commit messages, pull request code, and more!"
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
