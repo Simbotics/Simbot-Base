@@ -2,7 +2,7 @@
 name: Feature request
 about: I can't do something and I want to
 title: "[FEATURE]"
-labels: enhancement
+labels: ["enhancement", "needs triage"]
 assignees: ''
 
 ---
