@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.intake.enums.IntakeGamepieces;
-import frc.robot.subsystems.intake.enums.IntakeScoreType;
+import frc.robot.subsystems.intake.states.ScoringState;
 
 /**
  * This an example implementation of our intake subsystem from 2023.
@@ -52,93 +52,19 @@ public class IntakeSubsystem extends SubsystemBase {
   /**
    * Runs a command to score a gamepiece.
    *
-   * @param type the type of the score you want to make
+   * @param scoringState the state to run the intake in
    * @param expectedPiece the type of gamepiece to expect when scoring
    * @return a command that scores a gamepiece
    */
-  public Command intakeScoreCommand(IntakeScoreType type, IntakeGamepieces expectedPiece) {
+  public Command intakeScoreCommand(ScoringState scoringState, IntakeGamepieces expectedGamepiece) {
+    SmartDashboard.putString("INTAKE STATE", scoringState.getStateName());
+
     return run(() -> {
-          switch (type) {
-            case MID_CONE -> {
-              Commands.runOnce(() -> outtakeCommand(IntakeConstants.OuttakeSpeeds.MID_CONE), this)
-                  .andThen(Commands.waitSeconds(0.5))
-                  .andThen(stopIntakeCommand());
-            }
-
-            case MID_CONE_TIPPED -> {
-              Commands.runOnce(
-                      () -> outtakeCommand(IntakeConstants.OuttakeSpeeds.MID_CONE_TIPPED), this)
-                  .andThen(Commands.waitSeconds(0.5))
-                  .andThen(stopIntakeCommand());
-            }
-
-            case MID_CUBE -> {
-              Commands.runOnce(() -> outtakeCommand(IntakeConstants.OuttakeSpeeds.MID_CUBE), this)
-                  .andThen(Commands.waitSeconds(0.5))
-                  .andThen(stopIntakeCommand());
-            }
-
-            case MID_CUBE_AUTO -> {
-              Commands.runOnce(
-                      () -> outtakeCommand(IntakeConstants.OuttakeSpeeds.MID_CUBE_AUTO), this)
-                  .andThen(Commands.waitSeconds(0.5))
-                  .andThen(stopIntakeCommand());
-            }
-
-            case HIGH_CONE -> {
-              Commands.runOnce(() -> outtakeCommand(IntakeConstants.OuttakeSpeeds.HIGH_CONE), this)
-                  .andThen(Commands.waitSeconds(0.5))
-                  .andThen(stopIntakeCommand());
-            }
-
-            case HIGH_CONE_AUTO -> {
-              Commands.runOnce(
-                      () -> outtakeCommand(IntakeConstants.OuttakeSpeeds.HIGH_CONE_AUTO), this)
-                  .andThen(Commands.waitSeconds(0.5))
-                  .andThen(stopIntakeCommand());
-            }
-
-            case HIGH_CUBE -> {
-              Commands.runOnce(() -> outtakeCommand(IntakeConstants.OuttakeSpeeds.HIGH_CUBE), this)
-                  .andThen(Commands.waitSeconds(0.5))
-                  .andThen(stopIntakeCommand());
-            }
-
-            case HIGH_CUBE_AUTO -> {
-              Commands.runOnce(
-                      () -> outtakeCommand(IntakeConstants.OuttakeSpeeds.HIGH_CUBE_AUTO), this)
-                  .andThen(Commands.waitSeconds(0.5))
-                  .andThen(stopIntakeCommand());
-            }
-
-            case LOW -> {
-              if (expectedPiece.equals(IntakeGamepieces.CUBE)) {
-                Commands.runOnce(() -> outtakeCommand(IntakeConstants.OuttakeSpeeds.LOW_CUBE), this)
-                    .andThen(Commands.waitSeconds(1))
-                    .andThen(stopIntakeCommand());
-              } else {
-                Commands.runOnce(() -> outtakeCommand(IntakeConstants.OuttakeSpeeds.LOW_CONE), this)
-                    .andThen(Commands.waitSeconds(1))
-                    .andThen(stopIntakeCommand());
-              }
-            }
-
-            case LOW_AUTO -> {
-              if (expectedPiece.equals(IntakeGamepieces.CUBE)) {
-                Commands.runOnce(
-                        () -> outtakeCommand(IntakeConstants.OuttakeSpeeds.LOW_CUBE_AUTO), this)
-                    .andThen(Commands.waitSeconds(1))
-                    .andThen(stopIntakeCommand());
-              } else {
-                Commands.runOnce(
-                        () -> outtakeCommand(IntakeConstants.OuttakeSpeeds.LOW_CONE_AUTO), this)
-                    .andThen(Commands.waitSeconds(1))
-                    .andThen(stopIntakeCommand());
-              }
-            }
-          }
-        })
-        .andThen(stopIntakeCommand());
+      Commands.runOnce(
+        () -> outtakeCommand(scoringState.getOuttakeSpeed(expectedGamepiece)), this)
+      .andThen(Commands.waitSeconds(0.5))
+      .andThen(stopIntakeCommand());
+    }).andThen(stopIntakeCommand());
   }
 
   /**
