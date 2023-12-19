@@ -1,6 +1,6 @@
 package frc.robot.subsystems.intake.enums;
 
-public enum IntakeGamepieces {
+public enum IntakeGamepiece {
   CONE,
   CUBE
 }

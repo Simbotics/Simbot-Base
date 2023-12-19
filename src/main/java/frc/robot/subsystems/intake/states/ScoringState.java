@@ -1,6 +1,6 @@
 package frc.robot.subsystems.intake.states;
 
-import frc.robot.subsystems.intake.enums.IntakeGamepieces;
+import frc.robot.subsystems.intake.enums.IntakeGamepiece;
 
 public abstract class ScoringState {
   double outtakeSpeed;
@@ -48,7 +48,7 @@ public abstract class ScoringState {
    *
    * @return The outtake speed for the scoring state
    */
-  public double getOuttakeSpeed(IntakeGamepieces expectedGamepiece) {
+  public double getOuttakeSpeed(IntakeGamepiece expectedGamepiece) {
     if (expectedGamepiece == null) {
       return this.outtakeSpeed;
     }
