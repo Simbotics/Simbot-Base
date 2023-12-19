@@ -60,11 +60,12 @@ public class IntakeSubsystem extends SubsystemBase {
     SmartDashboard.putString("INTAKE STATE", scoringState.getStateName());
 
     return run(() -> {
-      Commands.runOnce(
-        () -> outtakeCommand(scoringState.getOuttakeSpeed(expectedGamepiece)), this)
-      .andThen(Commands.waitSeconds(0.5))
-      .andThen(stopIntakeCommand());
-    }).andThen(stopIntakeCommand());
+          Commands.runOnce(
+                  () -> outtakeCommand(scoringState.getOuttakeSpeed(expectedGamepiece)), this)
+              .andThen(Commands.waitSeconds(0.5))
+              .andThen(stopIntakeCommand());
+        })
+        .andThen(stopIntakeCommand());
   }
 
   /**
