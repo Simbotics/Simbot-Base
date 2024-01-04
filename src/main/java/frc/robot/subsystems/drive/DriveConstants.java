@@ -10,10 +10,12 @@ import frc.robot.subsystems.drive.swerve.SwerveModules;
 public class DriveConstants {
   /** Only touch these if you know what you're doing */
   private static final SlotGains steerGains = new SlotGains(100.0, 0, 0.05, 0, 0);
+
   private static final SlotGains driveGains = new SlotGains(3.0, 0, 0, 0, 0);
 
   public static final double kMaxSpeed = 6.0; // 6 meters per second desired top speed
-  public static final double kMaxAngularRate = Math.PI; // Half a rotation per second max angular velocity
+  public static final double kMaxAngularRate =
+      Math.PI; // Half a rotation per second max angular velocity
 
   private static final double kCoupleRatio = 3.5;
 
