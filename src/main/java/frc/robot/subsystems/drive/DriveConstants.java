@@ -121,7 +121,7 @@ public class DriveConstants {
           .withDriveMotorGains(driveGains)
           .withSpeedAt12VoltsMps(
               kSpeedAt12VoltsMps) // Theoretical free speed is 10 meters per second at 12v applied
-                                  // output
+          // output
           .withSteerInertia(Intertia.kSteerInertia)
           .withDriveInertia(Intertia.kDriveInertia)
           .withFeedbackSource(SteerFeedbackType.FusedCANcoder)

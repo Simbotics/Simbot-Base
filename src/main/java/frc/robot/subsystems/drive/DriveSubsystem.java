@@ -34,8 +34,8 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
   }
 
   /**
-   * Configures path planner to have a holonomic path follower so it can move in
-   * any direction. This is meant for holonomic drivetrains AND swerve
+   * Configures path planner to have a holonomic path follower so it can move in any direction. This
+   * is meant for holonomic drivetrains AND swerve
    */
   private void configurePathPlanner() {
     double driveBaseRadius = 0;
@@ -61,6 +61,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
   /**
    * Applies and runs a command on the swerve drivetrain
+   *
    * @param requestSupplier The supplier of the swerve request to apply (the request)
    * @return A command which runs the specified request
    */
@@ -74,6 +75,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
   /**
    * Returns a command that will run the specified pathplanner path
+   *
    * @param pathName The name of the path created in pathplanner
    * @return A command which runs the specified path
    */
@@ -130,9 +132,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     m_simNotifier.startPeriodic(DriveConstants.kSimLoopPeriod);
   }
 
-  /**
-   * Add any methods you want to call when the drive subsystem is initialized and called
-   */
+  /** Add any methods you want to call when the drive subsystem is initialized and called */
   public void initialize() {
     configurePathPlanner();
   }
@@ -159,6 +159,5 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     if (Utils.isSimulation()) {
       startSimThread();
     }
-
   }
 }
