@@ -28,11 +28,6 @@ public class RobotContainer {
             .withDeadband(DriveConstants.kMaxAngularRate * 0.1).withRotationalDeadband(DriveConstants.kMaxAngularRate * 0.1)
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
-    private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
-    private final SwerveRequest.RobotCentric forwardStraight = new SwerveRequest.RobotCentric()
-            .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
-    private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
-
     /* Path follower */
     private Command runAuto = drivetrain.getAutoPath("Tests");
 
@@ -40,6 +35,7 @@ public class RobotContainer {
 
     private void configureBindings() {
         ledSubsystem.setDefaultCommand(new InstantCommand(() -> ledSubsystem.periodic(), ledSubsystem));
+        drivetrain.registerTelemetry(logger::telemeterize);
 
         drivetrain.setDefaultCommand(
                 drivetrain
@@ -55,22 +51,6 @@ public class RobotContainer {
                                                                           // (left)
                         )
                         .ignoringDisable(true));
-
-        Controller.driver.greenButton().whileTrue(drivetrain.applyRequest(() -> brake));
-        Controller.driver
-                .yellowButton()
-                .whileTrue(
-                        drivetrain.applyRequest(
-                                () -> point.withModuleDirection(
-                                        new Rotation2d(-Controller.driver.getLeftY(), -Controller.driver.getLeftX()))));
-
-        drivetrain.registerTelemetry(logger::telemeterize);
-        Controller.driver.POVUp()
-                .whileTrue(
-                        drivetrain.applyRequest(() -> forwardStraight.withVelocityX(0.5).withVelocityY(0)));
-        Controller.driver.POVDown()
-                .whileTrue(
-                        drivetrain.applyRequest(() -> forwardStraight.withVelocityX(-0.5).withVelocityY(0)));
     }
 
     public RobotContainer() {
