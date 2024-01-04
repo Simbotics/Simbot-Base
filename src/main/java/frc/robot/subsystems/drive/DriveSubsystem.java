@@ -23,7 +23,6 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
 public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
-  private static final double kSimLoopPeriod = 0.005; // 5 ms
   private Notifier m_simNotifier = null;
   private double m_lastSimTime;
 
@@ -104,7 +103,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
               /* use the measured time delta, get battery voltage from WPILib */
               updateSimState(deltaTime, RobotController.getBatteryVoltage());
             });
-    m_simNotifier.startPeriodic(kSimLoopPeriod);
+    m_simNotifier.startPeriodic(DriveConstants.kSimLoopPeriod);
   }
 
   public void initialize() {
