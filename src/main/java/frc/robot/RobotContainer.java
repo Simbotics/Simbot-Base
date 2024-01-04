@@ -7,7 +7,6 @@ package frc.robot;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.drive.DriveConstants;
@@ -30,30 +29,35 @@ public class RobotContainer {
           .withRotationalDeadband(DriveConstants.kMaxAngularRate * 0.1)
           .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
-    /* Path follower */
-    private Command runAuto = drivetrain.getAutoPath("Tests");
+  /* Path follower */
+  private Command runAuto = drivetrain.getAutoPath("Tests");
 
   private final Telemetry logger = new Telemetry(DriveConstants.kMaxSpeed);
 
-    private void configureBindings() {
-        ledSubsystem.setDefaultCommand(new InstantCommand(() -> ledSubsystem.periodic(), ledSubsystem));
-        drivetrain.registerTelemetry(logger::telemeterize);
+  private void configureBindings() {
+    ledSubsystem.setDefaultCommand(new InstantCommand(() -> ledSubsystem.periodic(), ledSubsystem));
+    drivetrain.registerTelemetry(logger::telemeterize);
 
-        drivetrain.setDefaultCommand(
-                drivetrain
-                        .applyRequest(
-                                () -> drive
-                                        .withVelocityX(-Controller.driver.getLeftY() * DriveConstants.kMaxSpeed) // Drive forward with
-                                        // negative Y (forward)
-                                        .withVelocityY(
-                                                -Controller.driver.getLeftX() * DriveConstants.kMaxSpeed) // Drive left with negative X (left)
-                                        .withRotationalRate(
-                                                -Controller.driver.getRightX()
-                                                        * DriveConstants.kMaxAngularRate) // Drive counterclockwise with negative X
-                                                                          // (left)
-                        )
-                        .ignoringDisable(true));
-    }
+    drivetrain.setDefaultCommand(
+        drivetrain
+            .applyRequest(
+                () ->
+                    drive
+                        .withVelocityX(
+                            -Controller.driver.getLeftY()
+                                * DriveConstants.kMaxSpeed) // Drive forward with
+                        // negative Y (forward)
+                        .withVelocityY(
+                            -Controller.driver.getLeftX()
+                                * DriveConstants.kMaxSpeed) // Drive left with negative X (left)
+                        .withRotationalRate(
+                            -Controller.driver.getRightX()
+                                * DriveConstants
+                                    .kMaxAngularRate) // Drive counterclockwise with negative X
+                // (left)
+                )
+            .ignoringDisable(true));
+  }
 
   public RobotContainer() {
     configureBindings();
