@@ -30,10 +30,13 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
   @Override
   public void simulationPeriodic() {
-    /* Assume */
     updateSimState(0.02, 12);
   }
 
+  /**
+   * Configures path planner to have a holonomic path follower so it can move in
+   * any direction. This is meant for holonomic drivetrains AND swerve
+   */
   private void configurePathPlanner() {
     double driveBaseRadius = 0;
     for (var moduleLocation : m_moduleLocations) {
@@ -53,9 +56,14 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             DriveConstants.kSpeedAt12VoltsMps,
             driveBaseRadius,
             new ReplanningConfig()),
-        this); // Subsystem for requirements
+        this);
   }
 
+  /**
+   * Applies and runs a command on the swerve drivetrain
+   * @param requestSupplier The supplier of the swerve request to apply (the request)
+   * @return A command which runs the specified request
+   */
   public Command applyRequest(Supplier<SwerveRequest> requestSupplier) {
     return new RunCommand(
         () -> {
@@ -64,6 +72,11 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         this);
   }
 
+  /**
+   * Returns a command that will run the specified pathplanner path
+   * @param pathName The name of the path created in pathplanner
+   * @return A command which runs the specified path
+   */
   public Command getAutoPath(String pathName) {
     return new PathPlannerAuto(pathName);
   }
@@ -85,10 +98,21 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     }
   }
 
+  /**
+   * Returns the current robot chassis speeds
+   *
+   * @return The current robot chassis speeds as a Twist2d object
+   */
   public ChassisSpeeds getCurrentRobotChassisSpeeds() {
     return m_kinematics.toChassisSpeeds(getState().ModuleStates);
   }
 
+  /**
+   * Updates the state of the drivetrain for simulation
+   *
+   * @param deltaTime The time since the last update
+   * @param batteryVoltage The current battery voltage
+   */
   private void startSimThread() {
     m_lastSimTime = Utils.getCurrentTimeSeconds();
 
@@ -106,28 +130,35 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     m_simNotifier.startPeriodic(DriveConstants.kSimLoopPeriod);
   }
 
+  /**
+   * Add any methods you want to call when the drive subsystem is initialized and called
+   */
   public void initialize() {
     configurePathPlanner();
   }
 
-  /** Initialize the Drive subsystem when we create an instance of it * */
+  /** Initialize the drive subsystem when we create an instance of it and configure it * */
   public DriveSubsystem(
       SwerveDrivetrainConstants driveTrainConstants,
       double OdometryUpdateFrequency,
       SwerveModuleConstants... modules) {
     super(driveTrainConstants, OdometryUpdateFrequency, modules);
     this.initialize();
+
     if (Utils.isSimulation()) {
       startSimThread();
     }
   }
 
+  /** Initialize the drive subsystem when we create an instance of it and configure it * */
   public DriveSubsystem(
       SwerveDrivetrainConstants driveTrainConstants, SwerveModuleConstants... modules) {
     super(driveTrainConstants, modules);
+    this.initialize();
+
     if (Utils.isSimulation()) {
       startSimThread();
     }
-    this.initialize();
+
   }
 }
