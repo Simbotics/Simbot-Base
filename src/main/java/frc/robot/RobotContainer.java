@@ -15,70 +15,81 @@ import frc.robot.subsystems.drive.DriveSubsystem;
 import frc.robot.subsystems.led.LEDSubsystem;
 
 public class RobotContainer {
-    private class Controller {
-        public static final CommandController driver = new CommandController(0);
-        public static final CommandController operator = new CommandController(1);
-    }
+  private class Controller {
+    public static final CommandController driver = new CommandController(0);
+    public static final CommandController operator = new CommandController(1);
+  }
 
-    private final LEDSubsystem ledSubsystem;
+  private final LEDSubsystem ledSubsystem;
 
-    // Set up the base for the drive and drivetrain
-    final DriveSubsystem drivetrain = DriveConstants.DriveTrain;
-    private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(DriveConstants.kMaxAngularRate * 0.1).withRotationalDeadband(DriveConstants.kMaxAngularRate * 0.1)
-            .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
+  // Set up the base for the drive and drivetrain
+  final DriveSubsystem drivetrain = DriveConstants.DriveTrain;
+  private final SwerveRequest.FieldCentric drive =
+      new SwerveRequest.FieldCentric()
+          .withDeadband(DriveConstants.kMaxAngularRate * 0.1)
+          .withRotationalDeadband(DriveConstants.kMaxAngularRate * 0.1)
+          .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
-    private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
-    private final SwerveRequest.RobotCentric forwardStraight = new SwerveRequest.RobotCentric()
-            .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
-    private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
+  private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
+  private final SwerveRequest.RobotCentric forwardStraight =
+      new SwerveRequest.RobotCentric().withDriveRequestType(DriveRequestType.OpenLoopVoltage);
+  private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
-    /* Path follower */
-    private Command runAuto = drivetrain.getAutoPath("Tests");
+  /* Path follower */
+  private Command runAuto = drivetrain.getAutoPath("Tests");
 
-    private final Telemetry logger = new Telemetry(DriveConstants.kMaxSpeed);
+  private final Telemetry logger = new Telemetry(DriveConstants.kMaxSpeed);
 
-    private void configureBindings() {
-        ledSubsystem.setDefaultCommand(new InstantCommand(() -> ledSubsystem.periodic(), ledSubsystem));
+  private void configureBindings() {
+    ledSubsystem.setDefaultCommand(new InstantCommand(() -> ledSubsystem.periodic(), ledSubsystem));
 
-        drivetrain.setDefaultCommand(
-                drivetrain
-                        .applyRequest(
-                                () -> drive
-                                        .withVelocityX(-Controller.driver.getLeftY() * DriveConstants.kMaxSpeed) // Drive forward with
-                                        // negative Y (forward)
-                                        .withVelocityY(
-                                                -Controller.driver.getLeftX() * DriveConstants.kMaxSpeed) // Drive left with negative X (left)
-                                        .withRotationalRate(
-                                                -Controller.driver.getRightX()
-                                                        * DriveConstants.kMaxAngularRate) // Drive counterclockwise with negative X
-                                                                          // (left)
-                        )
-                        .ignoringDisable(true));
+    drivetrain.setDefaultCommand(
+        drivetrain
+            .applyRequest(
+                () ->
+                    drive
+                        .withVelocityX(
+                            -Controller.driver.getLeftY()
+                                * DriveConstants.kMaxSpeed) // Drive forward with
+                        // negative Y (forward)
+                        .withVelocityY(
+                            -Controller.driver.getLeftX()
+                                * DriveConstants.kMaxSpeed) // Drive left with negative X (left)
+                        .withRotationalRate(
+                            -Controller.driver.getRightX()
+                                * DriveConstants
+                                    .kMaxAngularRate) // Drive counterclockwise with negative X
+                // (left)
+                )
+            .ignoringDisable(true));
 
-        Controller.driver.greenButton().whileTrue(drivetrain.applyRequest(() -> brake));
-        Controller.driver
-                .yellowButton()
-                .whileTrue(
-                        drivetrain.applyRequest(
-                                () -> point.withModuleDirection(
-                                        new Rotation2d(-Controller.driver.getLeftY(), -Controller.driver.getLeftX()))));
+    Controller.driver.greenButton().whileTrue(drivetrain.applyRequest(() -> brake));
+    Controller.driver
+        .yellowButton()
+        .whileTrue(
+            drivetrain.applyRequest(
+                () ->
+                    point.withModuleDirection(
+                        new Rotation2d(
+                            -Controller.driver.getLeftY(), -Controller.driver.getLeftX()))));
 
-        drivetrain.registerTelemetry(logger::telemeterize);
-        Controller.driver.POVUp()
-                .whileTrue(
-                        drivetrain.applyRequest(() -> forwardStraight.withVelocityX(0.5).withVelocityY(0)));
-        Controller.driver.POVDown()
-                .whileTrue(
-                        drivetrain.applyRequest(() -> forwardStraight.withVelocityX(-0.5).withVelocityY(0)));
-    }
+    drivetrain.registerTelemetry(logger::telemeterize);
+    Controller.driver
+        .POVUp()
+        .whileTrue(
+            drivetrain.applyRequest(() -> forwardStraight.withVelocityX(0.5).withVelocityY(0)));
+    Controller.driver
+        .POVDown()
+        .whileTrue(
+            drivetrain.applyRequest(() -> forwardStraight.withVelocityX(-0.5).withVelocityY(0)));
+  }
 
-    public RobotContainer() {
-        configureBindings();
-        ledSubsystem = new LEDSubsystem();
-    }
+  public RobotContainer() {
+    configureBindings();
+    ledSubsystem = new LEDSubsystem();
+  }
 
-    public Command getAutonomousCommand() {
-        return runAuto;
-    }
+  public Command getAutonomousCommand() {
+    return runAuto;
+  }
 }
