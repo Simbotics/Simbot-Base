@@ -69,7 +69,6 @@ public class RobotContainer {
     // if (Utils.isSimulation()) {
     //   drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
     // }
-    drivetrain.registerTelemetry(logger::telemeterize);
 
     Controller.operator.yellowButton().toggleOnTrue(intakeSubsystem.intakeHoldCommand(IntakeGamepiece.CONE));
     Controller.operator.blueButton().toggleOnTrue(intakeSubsystem.intakeHoldCommand(IntakeGamepiece.CUBE));
