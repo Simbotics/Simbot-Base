@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import frc.robot.subsystems.intake.enums.IntakeGamepiece;
 import frc.robot.subsystems.intake.states.ScoringState;
 
@@ -56,7 +57,9 @@ public class IntakeSubsystem extends SubsystemBase {
    * @param expectedPiece the type of gamepiece to expect when scoring
    * @return a command that scores a gamepiece
    */
+
   public Command intakeScoreCommand(ScoringState scoringState, IntakeGamepiece expectedGamepiece) {
+
     SmartDashboard.putString("INTAKE STATE", scoringState.getStateName());
 
     return run(() -> {
