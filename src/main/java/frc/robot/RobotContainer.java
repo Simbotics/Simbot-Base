@@ -8,9 +8,13 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.intake.IntakeSubsystem;
+import frc.robot.subsystems.intake.enums.IntakeGamepieces;
+import frc.robot.subsystems.intake.enums.IntakeScoreType;
 import frc.robot.subsystems.led.LEDSubsystem;
 
 public class RobotContainer {
@@ -20,8 +24,13 @@ public class RobotContainer {
   /* Setting up bindings for necessary control of the swerve drive platform */
   CommandController driver = new CommandController(0); // Driver Controller
   CommandController operator = new CommandController(1); // Operator Controller
-  CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
+  
   private final LEDSubsystem ledSubsystem;
+  private final IntakeSubsystem intakeSubsystem;
+
+  PowerDistribution pdp = new PowerDistribution();
+  
+  CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
   SwerveRequest.FieldCentric drive =
       new SwerveRequest.FieldCentric()
           .withIsOpenLoop(true)
@@ -42,6 +51,7 @@ public class RobotContainer {
 
   private void configureBindings() {
     ledSubsystem.setDefaultCommand(new InstantCommand(() -> ledSubsystem.periodic(), ledSubsystem));
+    intakeSubsystem.setDefaultCommand(new InstantCommand(() -> intakeSubsystem.periodic(), intakeSubsystem));
 
     drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
         drivetrain
@@ -77,11 +87,16 @@ public class RobotContainer {
     driver.POVDown()
         .whileTrue(
             drivetrain.applyRequest(() -> forwardStraight.withVelocityX(-0.5).withVelocityY(0)));
+
+    operator.yellowButton().toggleOnTrue(intakeSubsystem.intakeHoldCommand(IntakeGamepieces.CONE));
+    operator.blueButton().toggleOnTrue(intakeSubsystem.intakeHoldCommand(IntakeGamepieces.CUBE));
+    operator.greenButton().toggleOnTrue(intakeSubsystem.intakeScoreCommand(IntakeScoreType.HIGH_CUBE, IntakeGamepieces.CONE));
   }
 
   public RobotContainer() {
     configureBindings();
     ledSubsystem = new LEDSubsystem();
+    intakeSubsystem = new IntakeSubsystem(pdp);
   }
 
   public Command getAutonomousCommand() {
