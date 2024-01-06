@@ -1,5 +1,8 @@
 [![Build](https://github.com/Simbotics/Simbot-Base/actions/workflows/build.yml/badge.svg)](https://github.com/Simbotics/Simbot-Base/actions/workflows/build.yml)
 
+# DISCLAIMER
+All code at this point in time is a WIP and has NOT been tested or run on any robot and we can NOT confirm that the code will work as it is intended.
+
 # Simbot-Base
 A base robot with the most up-to-date utilities and starting components to get started on robot code as fast as possible
 
