@@ -4,22 +4,24 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.drive.DriveConstants;
+import frc.robot.subsystems.drive.DriveSubsystem;
 import frc.robot.subsystems.intake.IntakeSubsystem;
-import frc.robot.subsystems.intake.enums.IntakeGamepieces;
-import frc.robot.subsystems.intake.enums.IntakeScoreType;
+import frc.robot.subsystems.intake.enums.IntakeGamepiece;
+import frc.robot.subsystems.intake.states.scoring.cone.HighCone;
 import frc.robot.subsystems.led.LEDSubsystem;
 
 public class RobotContainer {
-  final double MaxSpeed = 6; // 6 meters per second desired top speed
-  final double MaxAngularRate = Math.PI; // Half a rotation per second max angular velocity
+  private class Controller {
+    public static final CommandController driver = new CommandController(0);
+    public static final CommandController operator = new CommandController(1);
+  }
 
   /* Setting up bindings for necessary control of the swerve drive platform */
   CommandController driver = new CommandController(0); // Driver Controller
@@ -30,67 +32,52 @@ public class RobotContainer {
 
   PowerDistribution pdp = new PowerDistribution();
   
-  CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
-  SwerveRequest.FieldCentric drive =
+
+  // Set up the base for the drive and drivetrain
+  final DriveSubsystem drivetrain = DriveConstants.DriveTrain;
+  private final SwerveRequest.FieldCentric drive =
       new SwerveRequest.FieldCentric()
-          .withIsOpenLoop(true)
-          .withDeadband(MaxSpeed * 0.1)
-          .withRotationalDeadband(MaxAngularRate * 0.1); // I want field-centric
-  // driving in open loop
-  SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
-  SwerveRequest.RobotCentric forwardStraight =
-      new SwerveRequest.RobotCentric().withIsOpenLoop(true);
-  SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
+          .withDeadband(DriveConstants.kMaxAngularRate * 0.1)
+          .withRotationalDeadband(DriveConstants.kMaxAngularRate * 0.1)
+          .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
   /* Path follower */
-  // Command runAuto = drivetrain.getAutoPath("Tests");
+  private Command runAuto = drivetrain.getAutoPath("Tests");
 
-  Telemetry logger = new Telemetry(MaxSpeed);
-
-  Pose2d odomStart = new Pose2d(0, 0, new Rotation2d(0, 0));
+  private final Telemetry logger = new Telemetry(DriveConstants.kMaxSpeed);
 
   private void configureBindings() {
     ledSubsystem.setDefaultCommand(new InstantCommand(() -> ledSubsystem.periodic(), ledSubsystem));
-    intakeSubsystem.setDefaultCommand(new InstantCommand(() -> intakeSubsystem.periodic(), intakeSubsystem));
+    drivetrain.registerTelemetry(logger::telemeterize);
 
-    drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
+    drivetrain.setDefaultCommand(
         drivetrain
             .applyRequest(
                 () ->
                     drive
-                        .withVelocityX(-driver.getLeftY() * MaxSpeed) // Drive forward with
+                        .withVelocityX(
+                            -Controller.driver.getLeftY()
+                                * DriveConstants.kMaxSpeed) // Drive forward with
                         // negative Y (forward)
                         .withVelocityY(
-                            -driver.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+                            -Controller.driver.getLeftX()
+                                * DriveConstants.kMaxSpeed) // Drive left with negative X (left)
                         .withRotationalRate(
-                            -driver.getRightX()
-                                * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                            -Controller.driver.getRightX()
+                                * DriveConstants
+                                    .kMaxAngularRate) // Drive counterclockwise with negative X
+                // (left)
                 )
             .ignoringDisable(true));
-
-    driver.greenButton().whileTrue(drivetrain.applyRequest(() -> brake));
-    driver
-        .yellowButton()
-        .whileTrue(
-            drivetrain.applyRequest(
-                () ->
-                    point.withModuleDirection(
-                        new Rotation2d(-driver.getLeftY(), -driver.getLeftX()))));
 
     // if (Utils.isSimulation()) {
     //   drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
     // }
     drivetrain.registerTelemetry(logger::telemeterize);
-    driver.POVUp()
-        .whileTrue(
-            drivetrain.applyRequest(() -> forwardStraight.withVelocityX(0.5).withVelocityY(0)));
-    driver.POVDown()
-        .whileTrue(
-            drivetrain.applyRequest(() -> forwardStraight.withVelocityX(-0.5).withVelocityY(0)));
 
-    operator.yellowButton().toggleOnTrue(intakeSubsystem.intakeHoldCommand(IntakeGamepieces.CONE));
-    operator.blueButton().toggleOnTrue(intakeSubsystem.intakeHoldCommand(IntakeGamepieces.CUBE));
-    operator.greenButton().toggleOnTrue(intakeSubsystem.intakeScoreCommand(IntakeScoreType.HIGH_CUBE, IntakeGamepieces.CONE));
+    Controller.operator.yellowButton().toggleOnTrue(intakeSubsystem.intakeHoldCommand(IntakeGamepiece.CONE));
+    Controller.operator.blueButton().toggleOnTrue(intakeSubsystem.intakeHoldCommand(IntakeGamepiece.CUBE));
+    Controller.operator.greenButton().toggleOnTrue(intakeSubsystem.intakeScoreCommand(new HighCone(), IntakeGamepiece.CONE));
   }
 
   public RobotContainer() {
@@ -100,11 +87,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    /* First put the drivetrain into auto run mode, then run the auto */
-    return new InstantCommand(() -> {});
-  }
-
-  public boolean seedPoseButtonDown() {
-    return driver.leftBumper().getAsBoolean();
+    return runAuto;
   }
 }
