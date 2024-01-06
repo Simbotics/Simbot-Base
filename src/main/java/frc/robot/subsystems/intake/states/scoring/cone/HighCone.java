@@ -5,7 +5,7 @@ import frc.robot.subsystems.intake.states.ScoringState;
 
 public class HighCone extends ScoringState {
 
-  HighCone() {
+  public HighCone() {
     super(IntakeConstants.OuttakeSpeeds.HIGH_CONE, "High Cone");
   }
 }

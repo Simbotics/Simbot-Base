@@ -5,7 +5,7 @@ import frc.robot.subsystems.intake.states.ScoringState;
 
 public class LowAuto extends ScoringState {
 
-  LowAuto() {
+  public LowAuto() {
     super(
         IntakeConstants.OuttakeSpeeds.LOW_CUBE_AUTO,
         IntakeConstants.OuttakeSpeeds.LOW_CONE_AUTO,

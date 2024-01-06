@@ -5,7 +5,7 @@ import frc.robot.subsystems.intake.states.ScoringState;
 
 public class MidConeTipped extends ScoringState {
 
-  MidConeTipped() {
+  public MidConeTipped() {
     super(IntakeConstants.OuttakeSpeeds.MID_CONE_TIPPED, "Mid Cone Tipped");
   }
 }

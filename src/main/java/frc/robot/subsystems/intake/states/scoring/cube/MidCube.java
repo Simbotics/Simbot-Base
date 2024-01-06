@@ -5,7 +5,7 @@ import frc.robot.subsystems.intake.states.ScoringState;
 
 public class MidCube extends ScoringState {
 
-  MidCube() {
+  public MidCube() {
     super(IntakeConstants.OuttakeSpeeds.MID_CUBE, "Mid Cube");
   }
 }

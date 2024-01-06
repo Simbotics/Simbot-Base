@@ -7,10 +7,14 @@ package frc.robot;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.drive.DriveConstants;
 import frc.robot.subsystems.drive.DriveSubsystem;
+import frc.robot.subsystems.intake.IntakeSubsystem;
+import frc.robot.subsystems.intake.enums.IntakeGamepiece;
+import frc.robot.subsystems.intake.states.scoring.cone.HighCone;
 import frc.robot.subsystems.led.LEDSubsystem;
 
 public class RobotContainer {
@@ -20,6 +24,9 @@ public class RobotContainer {
   }
 
   private final LEDSubsystem ledSubsystem;
+  private final IntakeSubsystem intakeSubsystem;
+
+  private final PowerDistribution pdp = new PowerDistribution();
 
   // Set up the base for the drive and drivetrain
   final DriveSubsystem drivetrain = DriveConstants.DriveTrain;
@@ -57,11 +64,22 @@ public class RobotContainer {
                 // (left)
                 )
             .ignoringDisable(true));
+
+    Controller.operator
+        .yellowButton()
+        .toggleOnTrue(intakeSubsystem.intakeHoldCommand(IntakeGamepiece.CONE));
+    Controller.operator
+        .blueButton()
+        .toggleOnTrue(intakeSubsystem.intakeHoldCommand(IntakeGamepiece.CUBE));
+    Controller.operator
+        .greenButton()
+        .toggleOnTrue(intakeSubsystem.intakeScoreCommand(new HighCone(), IntakeGamepiece.CONE));
   }
 
   public RobotContainer() {
     configureBindings();
     ledSubsystem = new LEDSubsystem();
+    intakeSubsystem = new IntakeSubsystem(pdp);
   }
 
   public Command getAutonomousCommand() {

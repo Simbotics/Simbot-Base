@@ -5,7 +5,7 @@ import frc.robot.subsystems.intake.states.ScoringState;
 
 public class HighCube extends ScoringState {
 
-  HighCube() {
+  public HighCube() {
     super(IntakeConstants.OuttakeSpeeds.HIGH_CUBE, "High Cube");
   }
 }
