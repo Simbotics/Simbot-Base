@@ -57,7 +57,6 @@ public class IntakeSubsystem extends SubsystemBase {
    * @param expectedPiece the type of gamepiece to expect when scoring
    * @return a command that scores a gamepiece
    */
-
   public Command intakeScoreCommand(ScoringState scoringState, IntakeGamepiece expectedGamepiece) {
 
     SmartDashboard.putString("INTAKE STATE", scoringState.getStateName());

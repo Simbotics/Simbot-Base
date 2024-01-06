@@ -27,7 +27,6 @@ public class RobotContainer {
   private final IntakeSubsystem intakeSubsystem;
 
   PowerDistribution pdp = new PowerDistribution();
-  
 
   // Set up the base for the drive and drivetrain
   final DriveSubsystem drivetrain = DriveConstants.DriveTrain;
@@ -70,9 +69,15 @@ public class RobotContainer {
     //   drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
     // }
 
-    Controller.operator.yellowButton().toggleOnTrue(intakeSubsystem.intakeHoldCommand(IntakeGamepiece.CONE));
-    Controller.operator.blueButton().toggleOnTrue(intakeSubsystem.intakeHoldCommand(IntakeGamepiece.CUBE));
-    Controller.operator.greenButton().toggleOnTrue(intakeSubsystem.intakeScoreCommand(new HighCone(), IntakeGamepiece.CONE));
+    Controller.operator
+        .yellowButton()
+        .toggleOnTrue(intakeSubsystem.intakeHoldCommand(IntakeGamepiece.CONE));
+    Controller.operator
+        .blueButton()
+        .toggleOnTrue(intakeSubsystem.intakeHoldCommand(IntakeGamepiece.CUBE));
+    Controller.operator
+        .greenButton()
+        .toggleOnTrue(intakeSubsystem.intakeScoreCommand(new HighCone(), IntakeGamepiece.CONE));
   }
 
   public RobotContainer() {
