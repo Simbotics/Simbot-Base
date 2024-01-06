@@ -26,7 +26,7 @@ public class RobotContainer {
   private final LEDSubsystem ledSubsystem;
   private final IntakeSubsystem intakeSubsystem;
 
-  PowerDistribution pdp = new PowerDistribution();
+  private final PowerDistribution pdp = new PowerDistribution();
 
   // Set up the base for the drive and drivetrain
   final DriveSubsystem drivetrain = DriveConstants.DriveTrain;
@@ -64,10 +64,6 @@ public class RobotContainer {
                 // (left)
                 )
             .ignoringDisable(true));
-
-    // if (Utils.isSimulation()) {
-    //   drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
-    // }
 
     Controller.operator
         .yellowButton()
