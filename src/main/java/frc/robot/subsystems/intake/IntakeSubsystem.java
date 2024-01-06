@@ -6,7 +6,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.intake.enums.IntakeGamepieces;
+
+import frc.robot.subsystems.intake.enums.IntakeGamepiece;
 import frc.robot.subsystems.intake.states.ScoringState;
 
 /**
@@ -56,7 +57,9 @@ public class IntakeSubsystem extends SubsystemBase {
    * @param expectedPiece the type of gamepiece to expect when scoring
    * @return a command that scores a gamepiece
    */
-  public Command intakeScoreCommand(ScoringState scoringState, IntakeGamepieces expectedGamepiece) {
+
+  public Command intakeScoreCommand(ScoringState scoringState, IntakeGamepiece expectedGamepiece) {
+
     SmartDashboard.putString("INTAKE STATE", scoringState.getStateName());
 
     return run(() -> {
@@ -74,7 +77,7 @@ public class IntakeSubsystem extends SubsystemBase {
    * @param gamepiece the type of gamepiece to expect
    * @return a command that forces the intake to hold the specified gamepiece
    */
-  public Command intakeHoldCommand(IntakeGamepieces gamepiece) {
+  public Command intakeHoldCommand(IntakeGamepiece gamepiece) {
     return run(() -> {
           this.intakeMotor.set(IntakeConstants.INTAKING_SPEED);
 
@@ -85,12 +88,12 @@ public class IntakeSubsystem extends SubsystemBase {
                   this.pdp.getCurrent(IntakeConstants.INTAKE_MOTOR_CHANNEL)
                       < IntakeConstants.INTAKE_AMP_THRESHOLD);
 
-          if (gamepiece.equals(IntakeGamepieces.CUBE)) {
+          if (gamepiece.equals(IntakeGamepiece.CUBE)) {
             // wait a short amount of time so the gamepiece gets pulled in
             Commands.waitSeconds(IntakeConstants.INTAKE_CUBE_DELAY);
             this.intakeMotor.set(IntakeConstants.HOLD_CUBE_SPEED);
           }
-          if (gamepiece.equals(IntakeGamepieces.CONE)) {
+          if (gamepiece.equals(IntakeGamepiece.CONE)) {
             // we have a cone, so run the motor at a higher speed
             Commands.waitSeconds(IntakeConstants.INTAKE_CONE_DELAY);
             this.intakeMotor.set(IntakeConstants.HOLD_CONE_SPEED);
