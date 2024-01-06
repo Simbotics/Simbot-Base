@@ -23,10 +23,6 @@ public class RobotContainer {
     public static final CommandController operator = new CommandController(1);
   }
 
-  /* Setting up bindings for necessary control of the swerve drive platform */
-  CommandController driver = new CommandController(0); // Driver Controller
-  CommandController operator = new CommandController(1); // Operator Controller
-  
   private final LEDSubsystem ledSubsystem;
   private final IntakeSubsystem intakeSubsystem;
 
