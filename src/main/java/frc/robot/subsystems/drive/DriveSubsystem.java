@@ -16,6 +16,7 @@ import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -44,7 +45,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     }
 
     AutoBuilder.configureHolonomic(
-        () -> this.getState().Pose, // Supplier of current robot pose
+        this::getPose, // Supplier of current robot pose
         this::seedFieldRelative, // Consumer for seeding pose against auto
         this::getCurrentRobotChassisSpeeds,
         (speeds) ->
@@ -56,6 +57,13 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             DriveConstants.kSpeedAt12VoltsMps,
             driveBaseRadius,
             new ReplanningConfig()),
+            () -> {
+              var alliance = DriverStation.getAlliance();
+              if (alliance.isPresent()) {
+                  return alliance.get() == DriverStation.Alliance.Red;
+              }
+              return false;
+          },
         this);
   }
 
@@ -71,6 +79,14 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
           this.setControl(requestSupplier.get());
         },
         this);
+  }
+
+  /**
+   * Returns the current pose of the robot
+   * @return The robots pose in a Pose2d object
+   */
+  public Pose2d getPose() {
+    return this.getState().Pose;
   }
 
   /**
