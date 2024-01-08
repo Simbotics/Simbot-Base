@@ -59,10 +59,10 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             new ReplanningConfig()),
         () -> {
           var alliance = DriverStation.getAlliance();
-          if (alliance.isPresent()) {
-            return alliance.get() == DriverStation.Alliance.Red;
+          if (!alliance.isPresent()) {
+            return false;
           }
-          return false;
+          return alliance.get() == DriverStation.Alliance.Red;
         },
         this);
   }
