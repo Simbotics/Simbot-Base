@@ -57,13 +57,13 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             DriveConstants.kSpeedAt12VoltsMps,
             driveBaseRadius,
             new ReplanningConfig()),
-            () -> {
-              var alliance = DriverStation.getAlliance();
-              if (alliance.isPresent()) {
-                  return alliance.get() == DriverStation.Alliance.Red;
-              }
-              return false;
-          },
+        () -> {
+          var alliance = DriverStation.getAlliance();
+          if (alliance.isPresent()) {
+            return alliance.get() == DriverStation.Alliance.Red;
+          }
+          return false;
+        },
         this);
   }
 
@@ -83,6 +83,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
   /**
    * Returns the current pose of the robot
+   *
    * @return The robots pose in a Pose2d object
    */
   public Pose2d getPose() {
