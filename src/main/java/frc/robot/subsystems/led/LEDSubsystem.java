@@ -32,8 +32,12 @@ public class LEDSubsystem extends SubsystemBase {
     ledSegments.add(LEDSegment.BackRight);
     ledSegments.add(LEDSegment.FrontRight);
 
-    ledBuffer = new AddressableLEDBuffer(
-          (ledSegments.size() * LEDConstants.ledsPerSegment)); // Set the buffer size after we know how many segments there are
+    ledBuffer =
+        new AddressableLEDBuffer(
+            (ledSegments.size()
+                * LEDConstants
+                    .ledsPerSegment)); // Set the buffer size after we know how many segments there
+                                       // are
 
     leds.setLength(
         (ledSegments.size() * LEDConstants.ledsPerSegment)); // Set the length of the LED strip
