@@ -37,7 +37,7 @@ public class LEDSubsystem extends SubsystemBase {
             (ledSegments.size()
                 * LEDConstants
                     .ledsPerSegment)); // Set the buffer size after we know how many segments there
-                                       // are
+    // are
 
     leds.setLength(
         (ledSegments.size() * LEDConstants.ledsPerSegment)); // Set the length of the LED strip
