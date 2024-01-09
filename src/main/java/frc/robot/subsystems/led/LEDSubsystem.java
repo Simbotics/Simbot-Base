@@ -14,9 +14,7 @@ public class LEDSubsystem extends SubsystemBase {
 
   public static AddressableLED leds =
       new AddressableLED(0); // The PWM port the LEDs are plugged into
-  public static AddressableLEDBuffer ledBuffer =
-      new AddressableLEDBuffer(
-          (ledSegments.size() * LEDConstants.ledsPerSegment)); // The buffer that holds the LED data
+  public static AddressableLEDBuffer ledBuffer; // The buffer that holds the LED data
 
   @Override
   public void periodic() {
@@ -33,6 +31,13 @@ public class LEDSubsystem extends SubsystemBase {
     ledSegments.add(LEDSegment.BackLeft);
     ledSegments.add(LEDSegment.BackRight);
     ledSegments.add(LEDSegment.FrontRight);
+
+    ledBuffer =
+        new AddressableLEDBuffer(
+            (ledSegments.size()
+                * LEDConstants
+                    .ledsPerSegment)); // Set the buffer size after we know how many segments there
+    // are
 
     leds.setLength(
         (ledSegments.size() * LEDConstants.ledsPerSegment)); // Set the length of the LED strip
