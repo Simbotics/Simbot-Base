@@ -12,15 +12,23 @@ public class LEDSubsystem extends SubsystemBase {
 
   public static List<LEDSegment> ledSegments = new ArrayList<>();
 
+  private static boolean initialized = false;
+
   public static AddressableLED leds =
       new AddressableLED(0); // The PWM port the LEDs are plugged into
   public static AddressableLEDBuffer ledBuffer; // The buffer that holds the LED data
 
   @Override
   public void periodic() {
+    if (!initialized) {
+      System.out.println("LED Subsystem not initialized, initializing now...");
+      this.initialize();
+    }
+
     // For every segment that is registered, run the periodic function
     for (LEDSegment ledSegment : ledSegments) {
       ledSegment.getLedMode().periodic(ledSegment.getSegmentIdentifier());
+      leds.setData(ledBuffer);
     }
   }
 
@@ -42,7 +50,11 @@ public class LEDSubsystem extends SubsystemBase {
     leds.setLength(
         (ledSegments.size() * LEDConstants.ledsPerSegment)); // Set the length of the LED strip
 
+    leds.setData(ledBuffer); // Set the data of the LED strip
+
     leds.start(); // Start the LED strip
+
+    initialized = true;
   }
 
   /**
