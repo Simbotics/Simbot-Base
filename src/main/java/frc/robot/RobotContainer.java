@@ -77,9 +77,10 @@ public class RobotContainer {
   }
 
   public RobotContainer() {
-    configureBindings();
     ledSubsystem = new LEDSubsystem();
     intakeSubsystem = new IntakeSubsystem(pdp);
+
+    configureBindings(); // configure bindings after we initialize our subsystems
   }
 
   public Command getAutonomousCommand() {
